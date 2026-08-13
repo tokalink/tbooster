@@ -1,10 +1,11 @@
 # :rocket: TBooster - Laravel CRUD Generator (Laravel 11 / PHP 8.3 Ready)
 
-TBooster adalah versi *fork* dan perbaikan dari CRUDBooster agar kompatibel penuh dengan **Laravel 11** dan **PHP 8.3**.
+TBooster adalah versi *fork* dan perbaikan dari [crocodicstudio/crudbooster](https://github.com/crocodicstudio/crudbooster) agar kompatibel penuh dengan **Laravel 11** dan **PHP 8.3**.
+Kami mempertahankan struktur dan kemudahan penggunaan dari CRUDBooster asli, dengan menambahkan pembaruan dependensi yang modern.
 
 ## Cara Instalasi dari GitHub
 
-Karena *package* ini belum tersedia atau diperbarui di Packagist, Anda bisa menginstalnya secara langsung melalui repositori GitHub ini menggunakan Composer.
+Karena *package* ini belum tersedia di Packagist, Anda bisa menginstalnya secara langsung melalui repositori GitHub ini menggunakan Composer.
 
 ### Langkah 1: Tambahkan Repositori ke `composer.json`
 Buka file `composer.json` di *root* proyek Laravel Anda, lalu tambahkan konfigurasi repositori berikut:
@@ -22,7 +23,7 @@ Buka file `composer.json` di *root* proyek Laravel Anda, lalu tambahkan konfigur
 Jalankan perintah berikut di terminal Anda untuk mengunduh versi terbaru dari `main` branch:
 
 ```bash
-composer require crocodicstudio/crudbooster:dev-main
+composer require tokalink/tbooster:dev-main
 ```
 
 ### Langkah 3: Publish & Install
