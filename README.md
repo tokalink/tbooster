@@ -1,7 +1,7 @@
-# :rocket: TBooster - Laravel CRUD Generator (Laravel 11 / PHP 8.3 Ready)
+# :rocket: TBooster - Laravel CRUD Generator (Laravel 11+ / PHP 8.2+ Ready)
 
-TBooster adalah versi *fork* dan perbaikan dari [crocodicstudio/crudbooster](https://github.com/crocodicstudio/crudbooster) agar kompatibel penuh dengan **Laravel 11** dan **PHP 8.3**.
-Kami mempertahankan struktur dan kemudahan penggunaan dari CRUDBooster asli, dengan menambahkan pembaruan dependensi yang modern.
+TBooster adalah versi *fork* dan perbaikan dari [crocodicstudio/crudbooster](https://github.com/crocodicstudio/crudbooster) agar kompatibel penuh dengan versi modern Laravel (diuji sukses hingga **Laravel 13**) dan **PHP 8.2+**.
+Kami mempertahankan struktur dan kemudahan penggunaan dari CRUDBooster asli, dengan menambahkan pembaruan dependensi yang sangat modern.
 
 ## Cara Instalasi dari GitHub
 
