@@ -10,6 +10,8 @@ use crocodicstudio\crudbooster\commands\CrudboosterUpdateCommand;
 use Illuminate\Foundation\AliasLoader;
 use App;
 
+use Illuminate\Pagination\Paginator;
+
 class CRUDBoosterServiceProvider extends ServiceProvider
 {
     /**
@@ -21,7 +23,8 @@ class CRUDBoosterServiceProvider extends ServiceProvider
 
     public function boot()
     {        
-                                
+        Paginator::useBootstrapFive();
+        
         $this->loadViewsFrom(__DIR__.'/views', 'crudbooster');
         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
         $this->loadTranslationsFrom(__DIR__.'/localization','crudbooster');

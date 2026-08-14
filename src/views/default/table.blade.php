@@ -164,7 +164,7 @@
 
 <div class="row p-3 align-items-center g-3">
     <div class="col-md-6 pagination-wrapper">
-        {!! urldecode(str_replace("/?","?",$result->appends(Request::all())->render())) !!}
+        {!! $result->appends(Request::all())->links('pagination::bootstrap-5') !!}
     </div>
     <?php
     $from = $result->count() ? ($result->perPage() * $result->currentPage() - $result->perPage() + 1) : 0;
