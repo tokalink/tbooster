@@ -1,5 +1,5 @@
-<div class='form-group {{$header_group_class}} {{ ($errors->first($name))?"has-error":"" }}' id='form-group-{{$name}}' style="{{@$form['style']}}">
-    <label class='control-label col-sm-2'>
+<div class='row mb-3 {{$header_group_class}} {{ ($errors->first($name))?"has-error":"" }}' id='form-group-{{$name}}' style="{{@$form['style']}}">
+    <label class='col-sm-2 col-form-label fw-bold'>
         {{$form['label']}}
         @if($required)
             <span class='text-danger' title='{!! cbLang('this_field_is_required') !!}'>*</span>
@@ -8,11 +8,10 @@
 
     <div class="{{$col_width?:'col-sm-10'}}">
         <input type='text' title="{{$form['label']}}"
-               {{$required}} {{$readonly}} {!!$placeholder!!} {{$disabled}} {{@$validation['max']?"maxlength=".@$validation['max']:""}} class='form-control'
+               {{$required}} {{$readonly}} {!!$placeholder!!} {{$disabled}} {{@$validation['max']?"maxlength=".@$validation['max']:""}} class='form-control {{ $errors->first($name)?"is-invalid":"" }}'
                name="{{$name}}" id="{{$name}}" value='{{$value}}'/>
 
-        <div class="text-danger">{!! $errors->first($name)?"<i class='fa fa-info-circle'></i> ".$errors->first($name):"" !!}</div>
-        <p class='help-block'>{{ @$form['help'] }}</p>
-
+        <div class="text-danger mt-1">{!! $errors->first($name)?"<i class='bi bi-exclamation-circle'></i> ".$errors->first($name):"" !!}</div>
+        <div class='form-text'>{{ @$form['help'] }}</div>
     </div>
 </div>

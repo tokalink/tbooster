@@ -117,15 +117,15 @@
 
 @endif
 
-<div class='form-group {{$header_group_class}} {{ ($errors->first($name))?"has-error":"" }}' id='form-group-{{$name}}' style="{{@$form['style']}}">
-    <label class='control-label col-sm-2'>{{$form['label']}}
+<div class='row mb-3 {{$header_group_class}} {{ ($errors->first($name))?"has-error":"" }}' id='form-group-{{$name}}' style="{{@$form['style']}}">
+    <label class='col-sm-2 col-form-label fw-bold'>{{$form['label']}}
         @if($required)
             <span class='text-danger' title='{!! cbLang('this_field_is_required') !!}'>*</span>
         @endif
     </label>
 
     <div class="{{$col_width?:'col-sm-10'}}">
-        <select style='width:100%' class='form-control' id="{{$name}}"
+        <select style='width:100%' class='form-select {{ $errors->first($name)?"is-invalid":"" }}' id="{{$name}}"
                 {{$required}} {{$readonly}} {!!$placeholder!!} {{$disabled}} name="{{$name}}{{(!empty($form['relationship_table']))?'[]':''}}" {{ (!empty($form['relationship_table']))?'multiple="multiple"':'' }} >
             @if(!empty($form['dataenum']))
                 <option value=''>{{cbLang('text_prefix_option')}} {{$form['label']}}</option>
@@ -220,10 +220,10 @@
             <!--end-datatable-->
             @endif
         </select>
-        <div class="text-danger">
-            {!! $errors->first($name)?"<i class='fa fa-info-circle'></i> ".$errors->first($name):"" !!}
-        </div><!--end-text-danger-->
-        <p class='help-block'>{{ @$form['help'] }}</p>
+        <div class="text-danger mt-1">
+            {!! $errors->first($name)?"<i class='bi bi-exclamation-circle'></i> ".$errors->first($name):"" !!}
+        </div>
+        <div class='form-text'>{{ @$form['help'] }}</div>
 
     </div>
 </div>
