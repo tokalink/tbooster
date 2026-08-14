@@ -125,6 +125,11 @@
 
             });
         </script>
+        @if(@$script_js)
+            <script type="text/javascript">
+                {!! $script_js !!}
+            </script>
+        @endif
     @endpush
 
     <div class='row g-3'>
