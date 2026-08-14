@@ -159,15 +159,19 @@ class CRUDBooster
 
     public static function insert($table, $data = [])
     {
-        if (! $data['created_at']) {
+        if (empty($data['created_at'])) {
             if (Schema::hasColumn($table, 'created_at')) {
                 $data['created_at'] = date('Y-m-d H:i:s');
             }
         }
 
-        if (DB::table($table)->insert($data)) {
-            return $data['id'];
-        } else {
+        try {
+            $id = DB::table($table)->insertGetId($data);
+            return $id;
+        } catch (\Exception $e) {
+            if (DB::table($table)->insert($data)) {
+                return $data['id'] ?? true;
+            }
             return false;
         }
     }
