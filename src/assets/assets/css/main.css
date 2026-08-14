@@ -261,44 +261,39 @@ body.skin-black-light .sidebar-brand a {
 }
 
 /* ==========================================================================
-   Sidebar Themes (Dark vs Light Variants)
+   Refined Sidebar Typography & High-Contrast Active States
    ========================================================================== */
-/* Standard Dark Skins: Dark Sidebar */
-body.skin-blue .app-sidebar,
-body.skin-green .app-sidebar,
-body.skin-yellow .app-sidebar,
-body.skin-purple .app-sidebar,
-body.skin-red .app-sidebar,
-body.skin-black .app-sidebar {
-    background-color: #1e282c !important;
-    color: #b8c7ce !important;
+.app-sidebar .nav-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.55rem 1rem;
+    border-radius: 0.375rem;
+    margin: 0.1rem 0.5rem;
+    transition: all 0.15s ease-in-out;
 }
-body.skin-blue .app-sidebar .nav-link,
-body.skin-green .app-sidebar .nav-link,
-body.skin-yellow .app-sidebar .nav-link,
-body.skin-purple .app-sidebar .nav-link,
-body.skin-red .app-sidebar .nav-link,
-body.skin-black .app-sidebar .nav-link {
-    color: #b8c7ce !important;
+
+.app-sidebar .nav-header {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 1rem 1.25rem 0.4rem 1.25rem;
+    color: #6c757d !important;
 }
-body.skin-blue .app-sidebar .nav-link:hover,
-body.skin-green .app-sidebar .nav-link:hover,
-body.skin-yellow .app-sidebar .nav-link:hover,
-body.skin-purple .app-sidebar .nav-link:hover,
-body.skin-red .app-sidebar .nav-link:hover,
-body.skin-black .app-sidebar .nav-link:hover {
-    color: #ffffff !important;
-    background-color: rgba(255, 255, 255, 0.1) !important;
+
+.app-sidebar .nav-icon {
+    font-size: 1.05rem;
+    margin-right: 0.5rem;
+    vertical-align: middle;
 }
-body.skin-blue .app-sidebar .nav-link.active,
-body.skin-green .app-sidebar .nav-link.active,
-body.skin-yellow .app-sidebar .nav-link.active,
-body.skin-purple .app-sidebar .nav-link.active,
-body.skin-red .app-sidebar .nav-link.active,
-body.skin-black .app-sidebar .nav-link.active {
-    color: #ffffff !important;
-    background-color: rgba(255, 255, 255, 0.2) !important;
-}
+
+/* Standard Dark Sidebars Active Accent */
+body.skin-blue .app-sidebar .nav-link.active { background-color: #0d6efd !important; color: #ffffff !important; font-weight: 600 !important; }
+body.skin-green .app-sidebar .nav-link.active { background-color: #198754 !important; color: #ffffff !important; font-weight: 600 !important; }
+body.skin-yellow .app-sidebar .nav-link.active { background-color: #ffc107 !important; color: #212529 !important; font-weight: 600 !important; }
+body.skin-purple .app-sidebar .nav-link.active { background-color: #6f42c1 !important; color: #ffffff !important; font-weight: 600 !important; }
+body.skin-red .app-sidebar .nav-link.active { background-color: #dc3545 !important; color: #ffffff !important; font-weight: 600 !important; }
+body.skin-black .app-sidebar .nav-link.active { background-color: #0d6efd !important; color: #ffffff !important; font-weight: 600 !important; }
 
 /* Light Skins Variants (-light): Light Sidebar & High Contrast Menu */
 body.skin-blue-light .app-sidebar,
@@ -307,9 +302,9 @@ body.skin-yellow-light .app-sidebar,
 body.skin-purple-light .app-sidebar,
 body.skin-red-light .app-sidebar,
 body.skin-black-light .app-sidebar {
-    background-color: #f9fafc !important;
-    color: #333333 !important;
-    border-right: 1px solid #d2d6de !important;
+    background-color: #ffffff !important;
+    color: #2b3035 !important;
+    border-right: 1px solid #dee2e6 !important;
 }
 body.skin-blue-light .app-sidebar .nav-link,
 body.skin-green-light .app-sidebar .nav-link,
@@ -317,7 +312,7 @@ body.skin-yellow-light .app-sidebar .nav-link,
 body.skin-purple-light .app-sidebar .nav-link,
 body.skin-red-light .app-sidebar .nav-link,
 body.skin-black-light .app-sidebar .nav-link {
-    color: #444444 !important;
+    color: #2b3035 !important;
 }
 body.skin-blue-light .app-sidebar .nav-link:hover,
 body.skin-green-light .app-sidebar .nav-link:hover,
@@ -325,23 +320,41 @@ body.skin-yellow-light .app-sidebar .nav-link:hover,
 body.skin-purple-light .app-sidebar .nav-link:hover,
 body.skin-red-light .app-sidebar .nav-link:hover,
 body.skin-black-light .app-sidebar .nav-link:hover {
-    color: #111111 !important;
-    background-color: #f4f4f5 !important;
+    color: #000000 !important;
+    background-color: #e9ecef !important;
 }
-body.skin-blue-light .app-sidebar .nav-link.active,
-body.skin-green-light .app-sidebar .nav-link.active,
-body.skin-yellow-light .app-sidebar .nav-link.active,
-body.skin-purple-light .app-sidebar .nav-link.active,
-body.skin-red-light .app-sidebar .nav-link.active,
-body.skin-black-light .app-sidebar .nav-link.active {
-    color: #ffffff !important;
+
+/* High-Contrast Bold Active State for Light Sidebars */
+body.skin-blue-light .app-sidebar .nav-link.active {
     background-color: #0d6efd !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
 }
-body.skin-red-light .app-sidebar .nav-link.active { background-color: #dc3545 !important; }
-body.skin-green-light .app-sidebar .nav-link.active { background-color: #198754 !important; }
-body.skin-yellow-light .app-sidebar .nav-link.active { background-color: #ffc107 !important; color: #212529 !important; }
-body.skin-purple-light .app-sidebar .nav-link.active { background-color: #6f42c1 !important; }
-body.skin-black-light .app-sidebar .nav-link.active { background-color: #212529 !important; }
+body.skin-green-light .app-sidebar .nav-link.active {
+    background-color: #198754 !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+}
+body.skin-yellow-light .app-sidebar .nav-link.active {
+    background-color: #ffc107 !important;
+    color: #212529 !important;
+    font-weight: 600 !important;
+}
+body.skin-purple-light .app-sidebar .nav-link.active {
+    background-color: #6f42c1 !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+}
+body.skin-red-light .app-sidebar .nav-link.active {
+    background-color: #dc3545 !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+}
+body.skin-black-light .app-sidebar .nav-link.active {
+    background-color: #212529 !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+}
 
 .sidebar-brand {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
