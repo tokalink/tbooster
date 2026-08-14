@@ -57,7 +57,7 @@
 
     <div class="card">
         <div class="card-header d-flex flex-wrap align-items-center justify-content-between gap-2">
-            <div>
+            <div class="d-flex align-items-center gap-2">
                 @if(isset($button_bulk_action) && $button_bulk_action && ( (isset($button_delete) && $button_delete && CRUDBooster::isDelete()) || isset($button_selected) && $button_selected) )
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -82,7 +82,7 @@
                 @endif
             </div>
 
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2 ms-auto">
                 @if(isset($button_filter) && $button_filter)
                     <a href="javascript:void(0)" id='btn_advanced_filter' data-url-parameter='{{@$build_query}}'
                        title='{{cbLang('filter_dialog_title')}}' class="btn btn-sm btn-outline-secondary {{(Request::get('filter_column'))?'active':''}}">
