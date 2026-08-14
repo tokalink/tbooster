@@ -41,8 +41,8 @@
     @endif
 
     @stack('head')
-</head>
-<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+<?php $theme_color = Session::get('theme_color') ?: CRUDBooster::getSetting('theme_color') ?: 'skin-blue'; ?>
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary {{ $theme_color }}">
 <div class="app-wrapper">
 
     <!-- Header -->

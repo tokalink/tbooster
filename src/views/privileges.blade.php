@@ -2,49 +2,46 @@
 
 @section('content')
 
-    <div style="width:750px;margin:0 auto ">
-
+    <div style="max-width: 900px; margin: 0 auto;">
 
         @if(CRUDBooster::getCurrentMethod() != 'getProfile')
-            <p><a href='{{CRUDBooster::mainpath()}}'>{{cbLang("form_back_to_list",['module'=>CRUDBooster::getCurrentModule()->name])}}</a></p>
-    @endif
+            <p><a class="btn btn-outline-secondary btn-sm mb-3" href='{{CRUDBooster::mainpath()}}'><i class="bi bi-arrow-left me-1"></i> {{cbLang("form_back_to_list",['module'=>CRUDBooster::getCurrentModule()->name])}}</a></p>
+        @endif
 
-
-
-    <!-- Box -->
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">{{ $page_title }}</h3>
-                <div class="box-tools">
-
-                </div>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="card-title mb-0">{{ $page_title }}</h5>
             </div>
             <form method='post' action='{{ (@$row->id)?route("PrivilegesControllerPostEditSave")."/$row->id":route("PrivilegesControllerPostAddSave") }}'>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <div class="box-body">
+                <div class="card-body">
                     <div class="alert alert-info">
                         <strong>Note:</strong> To show the menu you have to create a menu at Menu Management
                     </div>
-                    <div class='form-group'>
-                        <label>{{cbLang('privileges_name')}}</label>
+                    <div class='mb-3'>
+                        <label class="form-label fw-bold">{{cbLang('privileges_name')}}</label>
                         <input type='text' class='form-control' name='name' required value='{{ @$row->name }}'/>
-                        <div class="text-danger">{{ $errors->first('name') }}</div>
+                        <div class="text-danger small">{{ $errors->first('name') }}</div>
                     </div>
 
-                    <div class='form-group'>
-                        <label>{{cbLang('set_as_superadmin')}}</label>
-                        <div id='set_as_superadmin' class='radio'>
-                            <label><input required {{ (@$row->is_superadmin==1)?'checked':'' }} type='radio' name='is_superadmin'
-                                          value='1'/> {{cbLang('confirmation_yes')}}</label> &nbsp;&nbsp;
-                            <label><input {{ (@$row->is_superadmin==0)?'checked':'' }} type='radio' name='is_superadmin'
-                                          value='0'/> {{cbLang('confirmation_no')}}</label>
+                    <div class='mb-3'>
+                        <label class="form-label fw-bold d-block">{{cbLang('set_as_superadmin')}}</label>
+                        <div id='set_as_superadmin'>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" required {{ (@$row->is_superadmin==1)?'checked':'' }} type='radio' name='is_superadmin' id="sa_yes" value='1'/>
+                                <label class="form-check-label" for="sa_yes">{{cbLang('confirmation_yes')}}</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" {{ (@$row->is_superadmin==0)?'checked':'' }} type='radio' name='is_superadmin' id="sa_no" value='0'/>
+                                <label class="form-check-label" for="sa_no">{{cbLang('confirmation_no')}}</label>
+                            </div>
                         </div>
-                        <div class="text-danger">{{ $errors->first('is_superadmin') }}</div>
+                        <div class="text-danger small">{{ $errors->first('is_superadmin') }}</div>
                     </div>
 
-                    <div class='form-group'>
-                        <label>{{cbLang('chose_theme_color')}}</label>
-                        <select name='theme_color' class='form-control' required>
+                    <div class='mb-3'>
+                        <label class="form-label fw-bold">{{cbLang('chose_theme_color')}}</label>
+                        <select name='theme_color' class='form-select' required>
                             <option value=''>{{cbLang('chose_theme_color_select')}}</option>
                             <?php
                             $skins = array(
@@ -66,13 +63,13 @@
                             <option <?=(@$row->theme_color == $skin) ? "selected" : ""?> value='<?=$skin?>'><?=ucwords(str_replace('-', ' ', $skin))?></option>
                             <?php endforeach;?>
                         </select>
-                        <div class="text-danger">{{ $errors->first('theme_color') }}</div>
+                        <div class="text-danger small">{{ $errors->first('theme_color') }}</div>
                         @push('bottom')
                             <script type="text/javascript">
                                 $(function () {
                                     $("select[name=theme_color]").change(function () {
                                         var n = $(this).val();
-                                        $("body").attr("class", n);
+                                        $("body").attr("class", "layout-fixed sidebar-expand-lg bg-body-tertiary " + n);
                                     })
 
                                     $('#set_as_superadmin input').click(function () {
@@ -90,22 +87,18 @@
                         @endpush
                     </div>
 
-                    <div id='privileges_configuration' class='form-group'>
-                        <label>{{cbLang('privileges_configuration')}}</label>
+                    <div id='privileges_configuration' class='mb-3'>
+                        <label class="form-label fw-bold mb-2">{{cbLang('privileges_configuration')}}</label>
                         @push('bottom')
                             <script>
                                 $(function () {
                                     $("#is_visible").click(function () {
                                         var is_ch = $(this).prop('checked');
-                                        console.log('is checked create ' + is_ch);
                                         $(".is_visible").prop("checked", is_ch);
-                                        console.log('Create all');
                                     })
                                     $("#is_create").click(function () {
                                         var is_ch = $(this).prop('checked');
-                                        console.log('is checked create ' + is_ch);
                                         $(".is_create").prop("checked", is_ch);
-                                        console.log('Create all');
                                     })
                                     $("#is_read").click(function () {
                                         var is_ch = $(this).is(':checked');
@@ -127,65 +120,68 @@
                                 })
                             </script>
                         @endpush
-                        <table class='table table-striped table-hover table-bordered'>
-                            <thead>
-                            <tr class='active'>
-                                <th width='3%'>{{cbLang('privileges_module_list_no')}}</th>
-                                <th width='60%'>{{cbLang('privileges_module_list_mod_names')}}</th>
-                                <th>&nbsp;</th>
-                                <th>{{cbLang('privileges_module_list_view')}}</th>
-                                <th>{{cbLang('privileges_module_list_create')}}</th>
-                                <th>{{cbLang('privileges_module_list_read')}}</th>
-                                <th>{{cbLang('privileges_module_list_update')}}</th>
-                                <th>{{cbLang('privileges_module_list_delete')}}</th>
-                            </tr>
-                            <tr class='info'>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <th>&nbsp;</th>
-                                <td align="center"><input title='Check all vertical' type='checkbox' id='is_visible'/></td>
-                                <td align="center"><input title='Check all vertical' type='checkbox' id='is_create'/></td>
-                                <td align="center"><input title='Check all vertical' type='checkbox' id='is_read'/></td>
-                                <td align="center"><input title='Check all vertical' type='checkbox' id='is_edit'/></td>
-                                <td align="center"><input title='Check all vertical' type='checkbox' id='is_delete'/></td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <?php $no = 1;?>
-                            @foreach($moduls as $modul)
-                                <?php
-                                $roles = DB::table('cms_privileges_roles')->where('id_cms_moduls', $modul->id)->where('id_cms_privileges', @$row->id ?: 0)->first();
-                                ?>
+                        <div class="table-responsive">
+                            <table class='table table-striped table-hover table-bordered align-middle'>
+                                <thead>
                                 <tr>
-                                    <td><?php echo $no++;?></td>
-                                    <td>{{$modul->name}}</td>
-                                    <td class='info' align="center"><input type='checkbox' title='Check All Horizontal'
-                                                                           <?=(@$roles->is_create && @$roles->is_read && @$roles->is_edit && @$roles->is_delete) ? "checked" : ""?> class='select_horizontal'/>
-                                    </td>
-                                    <td class='active' align="center"><input type='checkbox' class='is_visible' name='privileges[<?=$modul->id?>][is_visible]'
-                                                                             <?=@$roles->is_visible ? "checked" : ""?> value='1'/></td>
-                                    <td class='warning' align="center"><input type='checkbox' class='is_create' name='privileges[<?=$modul->id?>][is_create]'
-                                                                              <?=@$roles->is_create ? "checked" : ""?> value='1'/></td>
-                                    <td class='info' align="center"><input type='checkbox' class='is_read' name='privileges[<?=$modul->id?>][is_read]'
-                                                                           <?=@$roles->is_read ? "checked" : ""?> value='1'/></td>
-                                    <td class='success' align="center"><input type='checkbox' class='is_edit' name='privileges[<?=$modul->id?>][is_edit]'
-                                                                              <?=@$roles->is_edit ? "checked" : ""?> value='1'/></td>
-                                    <td class='danger' align="center"><input type='checkbox' class='is_delete' name='privileges[<?=$modul->id?>][is_delete]'
-                                                                             <?=@$roles->is_delete ? "checked" : ""?> value='1'/></td>
+                                    <th width='3%'>{{cbLang('privileges_module_list_no')}}</th>
+                                    <th width='40%'>{{cbLang('privileges_module_list_mod_names')}}</th>
+                                    <th width="5%">&nbsp;</th>
+                                    <th class="text-center">{{cbLang('privileges_module_list_view')}}</th>
+                                    <th class="text-center">{{cbLang('privileges_module_list_create')}}</th>
+                                    <th class="text-center">{{cbLang('privileges_module_list_read')}}</th>
+                                    <th class="text-center">{{cbLang('privileges_module_list_update')}}</th>
+                                    <th class="text-center">{{cbLang('privileges_module_list_delete')}}</th>
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <th>&nbsp;</th>
+                                    <th>&nbsp;</th>
+                                    <td align="center"><input title='Check all vertical' class="form-check-input" type='checkbox' id='is_visible'/></td>
+                                    <td align="center"><input title='Check all vertical' class="form-check-input" type='checkbox' id='is_create'/></td>
+                                    <td align="center"><input title='Check all vertical' class="form-check-input" type='checkbox' id='is_read'/></td>
+                                    <td align="center"><input title='Check all vertical' class="form-check-input" type='checkbox' id='is_edit'/></td>
+                                    <td align="center"><input title='Check all vertical' class="form-check-input" type='checkbox' id='is_delete'/></td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php $no = 1;?>
+                                @foreach($moduls as $modul)
+                                    <?php
+                                    $roles = DB::table('cms_privileges_roles')->where('id_cms_moduls', $modul->id)->where('id_cms_privileges', @$row->id ?: 0)->first();
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $no++;?></td>
+                                        <td>{{$modul->name}}</td>
+                                        <td align="center"><input type='checkbox' class="form-check-input select_horizontal" title='Check All Horizontal'
+                                                                               <?=(@$roles->is_create && @$roles->is_read && @$roles->is_edit && @$roles->is_delete) ? "checked" : ""?>/>
+                                        </td>
+                                        <td align="center"><input type='checkbox' class='form-check-input is_visible' name='privileges[<?=$modul->id?>][is_visible]'
+                                                                                 <?=@$roles->is_visible ? "checked" : ""?> value='1'/></td>
+                                        <td align="center"><input type='checkbox' class='form-check-input is_create' name='privileges[<?=$modul->id?>][is_create]'
+                                                                                  <?=@$roles->is_create ? "checked" : ""?> value='1'/></td>
+                                        <td align="center"><input type='checkbox' class='form-check-input is_read' name='privileges[<?=$modul->id?>][is_read]'
+                                                                               <?=@$roles->is_read ? "checked" : ""?> value='1'/></td>
+                                        <td align="center"><input type='checkbox' class='form-check-input is_edit' name='privileges[<?=$modul->id?>][is_edit]'
+                                                                                  <?=@$roles->is_edit ? "checked" : ""?> value='1'/></td>
+                                        <td align="center"><input type='checkbox' class='form-check-input is_delete' name='privileges[<?=$modul->id?>][is_delete]'
+                                                                                 <?=@$roles->is_delete ? "checked" : ""?> value='1'/></td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
 
                     </div>
 
-                </div><!-- /.box-body -->
-                <div class="box-footer" align="right">
+                </div>
+                <div class="card-footer d-flex justify-content-end gap-2">
                     <button type='button' onclick="location.href='{{CRUDBooster::mainpath()}}'"
-                            class='btn btn-default'>{{cbLang("button_cancel")}}</button>
-                    <button type='submit' class='btn btn-primary'><i class='fa fa-save'></i> {{cbLang("button_save")}}</button>
-                </div><!-- /.box-footer-->
-        </div><!-- /.box -->
+                            class='btn btn-outline-secondary'>{{cbLang("button_cancel")}}</button>
+                    <button type='submit' class='btn btn-primary'><i class='bi bi-save me-1'></i> {{cbLang("button_save")}}</button>
+                </div>
+            </form>
+        </div>
 
-    </div><!-- /.row -->
+    </div>
 @endsection
