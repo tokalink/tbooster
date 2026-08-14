@@ -501,12 +501,12 @@ class ModulsController extends CBController
         $post = Request::all();
         $id = $post['id'];
 
-        $label = $post['label'];
-        $name = $post['name'];
-        $width = $post['width'];
-        $type = $post['type'];
-        $option = $post['option'];
-        $validation = $post['validation'];
+        $label = $post['label'] ?? [];
+        $name = $post['name'] ?? [];
+        $width = $post['width'] ?? [];
+        $type = $post['type'] ?? [];
+        $option = $post['option'] ?? [];
+        $validation = $post['validation'] ?? [];
 
         $row = DB::table('cms_moduls')->where('id', $id)->first();
 
@@ -518,11 +518,11 @@ class ModulsController extends CBController
 
                 $form = [];
                 $form['label'] = $l;
-                $form['name'] = $name[$i];
-                $form['type'] = $type[$i];
-                $form['validation'] = $validation[$i];
-                $form['width'] = $width[$i];
-                if ($option[$i]) {
+                $form['name'] = $name[$i] ?? '';
+                $form['type'] = $type[$i] ?? 'text';
+                $form['validation'] = $validation[$i] ?? '';
+                $form['width'] = $width[$i] ?? '';
+                if (isset($option[$i]) && is_array($option[$i])) {
                     $form = array_merge($form, $option[$i]);
                 }
 
