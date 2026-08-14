@@ -20,17 +20,25 @@
 
             .draggable-menu li ul {
                 margin-top: 6px;
+                padding-left: 20px;
             }
 
             .draggable-menu li div {
-                padding: 5px;
-                border: 1px solid #cccccc;
-                background: #eeeeee;
+                padding: 10px;
+                border: 1px solid var(--bs-border-color, #495057);
+                background: var(--bs-secondary-bg, #2b3035);
+                color: var(--bs-body-color, #e0e0e0);
+                border-radius: 6px;
                 cursor: move;
             }
 
+            .draggable-menu li div a {
+                color: var(--bs-body-color, #e0e0e0);
+            }
+
             .draggable-menu li .is-dashboard {
-                background: #fff6e0;
+                background: var(--bs-warning-bg-subtle, rgba(255, 193, 7, 0.15));
+                border-color: var(--bs-warning-border-subtle, #ffc107);
             }
 
             .draggable-menu li .icon-is-dashboard {
@@ -39,20 +47,14 @@
 
             .draggable-menu li {
                 list-style-type: none;
-                margin-bottom: 4px;
+                margin-bottom: 6px;
                 min-height: 35px;
             }
 
             .draggable-menu li.placeholder {
                 position: relative;
-                border: 1px dashed #b7042c;
-                background: #ffffff;
-                /** More li styles **/
-            }
-
-            .draggable-menu li.placeholder:before {
-                position: absolute;
-                /** Define arrowhead **/
+                border: 1px dashed var(--bs-danger, #dc3545);
+                background: var(--bs-tertiary-bg, #212529);
             }
         </style>
     @endpush
@@ -65,7 +67,7 @@
                     var label = $(originalOption).text();
                     var val = $(originalOption).val();
                     if (!val) return label;
-                    var $resp = $('<span><i style="margin-top:5px" class="pull-right ' + $(originalOption).val() + '"></i> ' + $(originalOption).data('label') + '</span>');
+                    var $resp = $('<span><i style="margin-top:5px" class="float-end ' + $(originalOption).val() + '"></i> ' + $(originalOption).data('label') + '</span>');
                     return $resp;
                 }
 
@@ -86,14 +88,12 @@
                     group: '.draggable-menu',
                     delay: 200,
                     isValidTarget: function ($item, container) {
-                        var depth = 1, // Start with a depth of one (the element itself)
+                        var depth = 1,
                             maxDepth = 2,
                             children = $item.find('ul').first().find('li');
 
-                        // Add the amount of parents to the depth
                         depth += container.el.parents('ul').length;
 
-                        // Increment the depth for each time a child
                         while (children.length) {
                             depth++;
                             children = children.find('ul').first().find('li');
@@ -127,15 +127,15 @@
         </script>
     @endpush
 
-    <div class='row'>
-        <div class="col-sm-5">
+    <div class='row g-3'>
+        <div class="col-md-5">
 
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <strong>Menu Order (Active)</strong> <span id='menu-saved-info' style="display:none" class='pull-right text-success'><i
-                                class='fa fa-check'></i> Menu Saved !</span>
+            <div class="card mb-3">
+                <div class="card-header text-bg-success">
+                    <strong class="card-title mb-0">Menu Order (Active)</strong>
+                    <span id='menu-saved-info' style="display:none" class='float-end text-white'><i class='bi bi-check-lg'></i> Menu Saved !</span>
                 </div>
-                <div class="panel-body clearfix">
+                <div class="card-body">
                     <ul class='draggable-menu draggable-menu-active'>
                         @foreach($menu_active as $menu)
                             @php
@@ -144,15 +144,14 @@
                                 ->where('id_cms_menus',$menu->id)->pluck('cms_privileges.name')->toArray();
                             @endphp
                             <li data-id='{{$menu->id}}' data-name='{{$menu->name}}'>
-                                <div class='{{$menu->is_dashboard?"is-dashboard":""}}' title="{{$menu->is_dashboard?'This is setted as Dashboard':''}}">
-                                    <i class='{{($menu->is_dashboard)?"icon-is-dashboard fa fa-dashboard":$menu->icon}}'></i> {{$menu->name}} <span
-                                            class='pull-right'><a class='fa fa-pencil' title='Edit'
-                                                                  href='{{route("MenusControllerGetEdit")."/".$menu->id }}?return_url={{urlencode(Request::fullUrl())}}'></a>&nbsp;&nbsp;<a
-                                                title='Delete' class='fa fa-trash'
-                                                onclick='{{CRUDBooster::deleteConfirm(route("MenusControllerGetDelete") ."/".$menu->id) }}'
-                                                href='javascript:void(0)'></a></span>
-                                    <br/><em class="text-muted">
-                                        <small><i class="fa fa-users"></i> &nbsp; {{implode(', ',$privileges)}}</small>
+                                <div class='{{$menu->is_dashboard?"is-dashboard":""}}' title="{{$menu->is_dashboard?'This is set as Dashboard':''}}">
+                                    <i class='{{($menu->is_dashboard)?"icon-is-dashboard bi bi-speedometer2":$menu->icon}}'></i> <strong>{{$menu->name}}</strong>
+                                    <span class='float-end'>
+                                        <a class='bi bi-pencil me-1' title='Edit' href='{{route("MenusControllerGetEdit")."/".$menu->id }}?return_url={{urlencode(Request::fullUrl())}}'></a>
+                                        <a title='Delete' class='bi bi-trash text-danger' onclick='{{CRUDBooster::deleteConfirm(route("MenusControllerGetDelete") ."/".$menu->id) }}' href='javascript:void(0)'></a>
+                                    </span>
+                                    <br/><em class="text-secondary">
+                                        <small><i class="bi bi-people"></i> &nbsp; {{implode(', ',$privileges)}}</small>
                                     </em>
                                 </div>
                                 <ul>
@@ -165,15 +164,14 @@
                                             @endphp
                                             <li data-id='{{$child->id}}' data-name='{{$child->name}}'>
                                                 <div class='{{$child->is_dashboard?"is-dashboard":""}}'
-                                                     title="{{$child->is_dashboard?'This is setted as Dashboard':''}}"><i
-                                                            class='{{($child->is_dashboard)?"icon-is-dashboard fa fa-dashboard":$child->icon}}'></i> {{$child->name}}
-                                                    <span class='pull-right'><a class='fa fa-pencil' title='Edit'
-                                                                                href='{{ route("MenusControllerGetEdit") ."/".$child->id }}?return_url={{urlencode(Request::fullUrl())}}'></a>&nbsp;&nbsp;<a
-                                                                title="Delete" class='fa fa-trash'
-                                                                onclick='{{CRUDBooster::deleteConfirm(route("MenusControllerGetDelete") . "/". $child->id) }}'
-                                                                href='javascript:void(0)'></a></span>
-                                                    <br/><em class="text-muted">
-                                                        <small><i class="fa fa-users"></i> &nbsp; {{implode(', ',$privileges)}}</small>
+                                                     title="{{$child->is_dashboard?'This is set as Dashboard':''}}">
+                                                    <i class='{{($child->is_dashboard)?"icon-is-dashboard bi bi-speedometer2":$child->icon}}'></i> {{$child->name}}
+                                                    <span class='float-end'>
+                                                        <a class='bi bi-pencil me-1' title='Edit' href='{{ route("MenusControllerGetEdit") ."/".$child->id }}?return_url={{urlencode(Request::fullUrl())}}'></a>
+                                                        <a title="Delete" class='bi bi-trash text-danger' onclick='{{CRUDBooster::deleteConfirm(route("MenusControllerGetDelete") . "/". $child->id) }}' href='javascript:void(0)'></a>
+                                                    </span>
+                                                    <br/><em class="text-secondary">
+                                                        <small><i class="bi bi-people"></i> &nbsp; {{implode(', ',$privileges)}}</small>
                                                     </em>
                                                 </div>
                                             </li>
@@ -184,34 +182,35 @@
                         @endforeach
                     </ul>
                     @if(count($menu_active)==0)
-                        <div align="center">Active menu is empty, please add new menu</div>
+                        <div class="text-center text-secondary">Active menu is empty, please add new menu</div>
                     @endif
                 </div>
             </div>
 
-            <div class="panel panel-danger">
-                <div class="panel-heading">
-                    <strong>Menu Order (Inactive)</strong>
+            <div class="card mb-3">
+                <div class="card-header text-bg-danger">
+                    <strong class="card-title mb-0">Menu Order (Inactive)</strong>
                 </div>
-                <div class="panel-body clearfix">
+                <div class="card-body">
                     <ul class='draggable-menu draggable-menu-inactive'>
                         @foreach($menu_inactive as $menu)
                             <li data-id='{{$menu->id}}' data-name='{{$menu->name}}'>
-                                <div><i class='{{$menu->icon}}'></i> {{$menu->name}} <span class='pull-right'><a class='fa fa-pencil' title='Edit'
-                                                                                                                 href='{{route("MenusControllerGetEdit",["id"=>$menu->id])}}?return_url={{urlencode(Request::fullUrl())}}'></a>&nbsp;&nbsp;<a
-                                                title='Delete' class='fa fa-trash'
-                                                onclick='{{CRUDBooster::deleteConfirm(route("MenusControllerGetDelete",["id"=>$menu->id]))}}'
-                                                href='javascript:void(0)'></a></span></div>
+                                <div><i class='{{$menu->icon}}'></i> {{$menu->name}}
+                                    <span class='float-end'>
+                                        <a class='bi bi-pencil me-1' title='Edit' href='{{route("MenusControllerGetEdit",["id"=>$menu->id])}}?return_url={{urlencode(Request::fullUrl())}}'></a>
+                                        <a title='Delete' class='bi bi-trash text-danger' onclick='{{CRUDBooster::deleteConfirm(route("MenusControllerGetDelete",["id"=>$menu->id]))}}' href='javascript:void(0)'></a>
+                                    </span>
+                                </div>
                                 <ul>
                                     @if(@$menu->children)
                                         @foreach($menu->children as $child)
                                             <li data-id='{{$child->id}}' data-name='{{$child->name}}'>
-                                                <div><i class='{{$child->icon}}'></i> {{$child->name}} <span class='pull-right'><a class='fa fa-pencil'
-                                                                                                                                   title='Edit'
-                                                                                                                                   href='{{route("MenusControllerGetEdit",["id"=>$child->id])}}?return_url={{urlencode(Request::fullUrl())}}'></a>&nbsp;&nbsp;<a
-                                                                title="Delete" class='fa fa-trash'
-                                                                onclick='{{CRUDBooster::deleteConfirm(route("MenusControllerGetDelete",["id"=>$child->id]))}}'
-                                                                href='javascript:void(0)'></a></span></div>
+                                                <div><i class='{{$child->icon}}'></i> {{$child->name}}
+                                                    <span class='float-end'>
+                                                        <a class='bi bi-pencil me-1' title='Edit' href='{{route("MenusControllerGetEdit",["id"=>$child->id])}}?return_url={{urlencode(Request::fullUrl())}}'></a>
+                                                        <a title="Delete" class='bi bi-trash text-danger' onclick='{{CRUDBooster::deleteConfirm(route("MenusControllerGetDelete",["id"=>$child->id]))}}' href='javascript:void(0)'></a>
+                                                    </span>
+                                                </div>
                                             </li>
                                         @endforeach
                                     @endif
@@ -220,24 +219,26 @@
                         @endforeach
                     </ul>
                     @if(count($menu_inactive)==0)
-                        <div align="center" id='inactive_text' class='text-muted'>Inactive menu is empty</div>
+                        <div class="text-center text-secondary" id='inactive_text'>Inactive menu is empty</div>
                     @endif
                 </div>
             </div>
 
 
         </div>
-        <div class="col-sm-7">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Add Menu
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header text-bg-primary">
+                    <strong class="card-title mb-0">Add Menu</strong>
                 </div>
-                <div class="panel-body">
-                    <form class='form-horizontal' method='post' id="form" enctype="multipart/form-data" action='{{CRUDBooster::mainpath("add-save")}}'>
+                <div class="card-body">
+                    <form method='post' id="form" enctype="multipart/form-data" action='{{CRUDBooster::mainpath("add-save")}}'>
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type='hidden' name='return_url' value='{{Request::fullUrl()}}'/>
                         @include("crudbooster::default.form_body")
-                        <p align="right"><input type='submit' class='btn btn-primary' value='Add Menu'/></p>
+                        <div class="d-flex justify-content-end mt-3">
+                            <input type='submit' class='btn btn-primary' value='Add Menu'/>
+                        </div>
                     </form>
                 </div>
             </div>
