@@ -1,22 +1,6 @@
 @push('bottom')
     <script type="text/javascript">
         $(document).ready(function () {
-            var $window = $(window);
-
-            function checkWidth() {
-                var windowsize = $window.width();
-                if (windowsize > 500) {
-                    console.log(windowsize);
-                    $('#box-body-table').removeClass('table-responsive');
-                } else {
-                    console.log(windowsize);
-                    $('#box-body-table').addClass('table-responsive');
-                }
-            }
-
-            checkWidth();
-            $(window).resize(checkWidth);
-
             $('.selected-action ul li a').click(function () {
                 var name = $(this).data('name');
                 $('#form-table input[name="button_name"]').val(name);
@@ -24,8 +8,7 @@
 
                 swal({
                         title: "{{cbLang("confirmation_title")}}",
-                        text: "{{cbLang("alert_bulk_action_button")}} " + title + " 
-			",
+                        text: "{{cbLang("alert_bulk_action_button")}} " + title + "",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#008D4C",
@@ -49,11 +32,11 @@
 <form id='form-table' method='post' action='{{CRUDBooster::mainpath("action-selected")}}'>
     <input type='hidden' name='button_name' value=''/>
     <input type='hidden' name='_token' value='{{csrf_token()}}'/>
-    <table id='table_dashboard' class="table table-hover table-striped table-bordered">
+    <table id='table_dashboard' class="table table-hover table-striped table-bordered m-0 align-middle">
         <thead>
-        <tr class="active">
+        <tr class="table-secondary">
             <?php if($button_bulk_action):?>
-            <th width='3%'><input type='checkbox' id='checkall'/></th>
+            <th width='3%' class="text-center"><input type='checkbox' id='checkall' class="form-check-input"/></th>
             <?php endif;?>
             <?php if($show_numbering):?>
             <th width="1%">{{ cbLang('no') }}</th>
@@ -75,20 +58,20 @@
                     switch ($sort_column[$field]['sorting']) {
                         case 'asc':
                             $url = CRUDBooster::urlFilterColumn($field, 'sorting', 'desc');
-                            echo "<a href='$url' title='Click to sort descending'>$colname &nbsp; <i class='fa fa-sort-desc'></i></a>";
+                            echo "<a href='$url' class='text-decoration-none' title='Click to sort descending'>$colname &nbsp; <i class='bi bi-sort-alpha-down'></i></a>";
                             break;
                         case 'desc':
                             $url = CRUDBooster::urlFilterColumn($field, 'sorting', 'asc');
-                            echo "<a href='$url' title='Click to sort ascending'>$colname &nbsp; <i class='fa fa-sort-asc'></i></a>";
+                            echo "<a href='$url' class='text-decoration-none' title='Click to sort ascending'>$colname &nbsp; <i class='bi bi-sort-alpha-down-alt'></i></a>";
                             break;
                         default:
                             $url = CRUDBooster::urlFilterColumn($field, 'sorting', 'asc');
-                            echo "<a href='$url' title='Click to sort ascending'>$colname &nbsp; <i class='fa fa-sort'></i></a>";
+                            echo "<a href='$url' class='text-decoration-none' title='Click to sort ascending'>$colname &nbsp; <i class='bi bi-arrow-down-up'></i></a>";
                             break;
                     }
                 } else {
                     $url = CRUDBooster::urlFilterColumn($field, 'sorting', 'asc');
-                    echo "<a href='$url' title='Click to sort ascending'>$colname &nbsp; <i class='fa fa-sort'></i></a>";
+                    echo "<a href='$url' class='text-decoration-none' title='Click to sort ascending'>$colname &nbsp; <i class='bi bi-arrow-down-up'></i></a>";
                 }
 
                 echo "</th>";
@@ -104,16 +87,16 @@
         </thead>
         <tbody>
         @if(count($result)==0)
-            <tr class='warning'>
+            <tr class='table-warning text-center'>
                 <?php if($button_bulk_action && $show_numbering):?>
-                <td colspan='{{count($columns)+3}}' align="center">
+                <td colspan='{{count($columns)+3}}'>
                 <?php elseif( ($button_bulk_action && ! $show_numbering) || (! $button_bulk_action && $show_numbering) ):?>
-                <td colspan='{{count($columns)+2}}' align="center">
+                <td colspan='{{count($columns)+2}}'>
                 <?php else:?>
-                <td colspan='{{count($columns)+1}}' align="center">
+                <td colspan='{{count($columns)+1}}'>
                     <?php endif;?>
 
-                    <i class='fa fa-search'></i> {{cbLang("table_data_not_found")}}
+                    <i class='bi bi-search'></i> {{cbLang("table_data_not_found")}}
                 </td>
             </tr>
         @endif
@@ -148,7 +131,6 @@
                 @endforeach
         </tbody>
 
-
         <tfoot>
         <tr>
             <?php if($button_bulk_action):?>
@@ -180,25 +162,32 @@
 
 </form><!--END FORM TABLE-->
 
-<div class="col-md-8">{!! urldecode(str_replace("/?","?",$result->appends(Request::all())->render())) !!}</div>
-<?php
-$from = $result->count() ? ($result->perPage() * $result->currentPage() - $result->perPage() + 1) : 0;
-$to = $result->perPage() * $result->currentPage() - $result->perPage() + $result->count();
-$total = $result->total();
-?>
-<div class="col-md-4"><span class="pull-right">{{ cbLang("filter_rows_total") }}
-        : {{ $from }} {{ cbLang("filter_rows_to") }} {{ $to }} {{ cbLang("filter_rows_of") }} {{ $total }}</span></div>
+<div class="row p-3 align-items-center">
+    <div class="col-md-8">
+        {!! urldecode(str_replace("/?","?",$result->appends(Request::all())->render())) !!}
+    </div>
+    <?php
+    $from = $result->count() ? ($result->perPage() * $result->currentPage() - $result->perPage() + 1) : 0;
+    $to = $result->perPage() * $result->currentPage() - $result->perPage() + $result->count();
+    $total = $result->total();
+    ?>
+    <div class="col-md-4 text-end">
+        <span class="text-secondary">{{ cbLang("filter_rows_total") }} : {{ $from }} {{ cbLang("filter_rows_to") }} {{ $to }} {{ cbLang("filter_rows_of") }} {{ $total }}</span>
+    </div>
+</div>
 
 @if($columns)
     @push('bottom')
         <script>
             $(function () {
                 $('.btn-filter-data').click(function () {
-                    $('#filter-data').modal('show');
+                    var myModal = new bootstrap.Modal(document.getElementById('filter-data'));
+                    myModal.show();
                 })
 
                 $('.btn-export-data').click(function () {
-                    $('#export-data').modal('show');
+                    var myModal = new bootstrap.Modal(document.getElementById('export-data'));
+                    myModal.show();
                 })
 
                 var toggle_advanced_report_boolean = 1;
@@ -206,11 +195,11 @@ $total = $result->total();
 
                     if (toggle_advanced_report_boolean == 1) {
                         $("#advanced_export").slideDown();
-                        $(this).html("<i class='fa fa-minus-square-o'></i> {{cbLang('export_dialog_show_advanced')}}");
+                        $(this).html("<i class='bi bi-dash-square'></i> {{cbLang('export_dialog_show_advanced')}}");
                         toggle_advanced_report_boolean = 0;
                     } else {
                         $("#advanced_export").slideUp();
-                        $(this).html("<i class='fa fa-plus-square-o'></i> {{cbLang('export_dialog_show_advanced')}}");
+                        $(this).html("<i class='bi bi-plus-square'></i> {{cbLang('export_dialog_show_advanced')}}");
                         toggle_advanced_report_boolean = 1;
                     }
 
@@ -232,7 +221,8 @@ $total = $result->total();
                 })
 
                 $('#btn_advanced_filter').click(function () {
-                    $('#advanced_filter_modal').modal('show');
+                    var myModal = new bootstrap.Modal(document.getElementById('advanced_filter_modal'));
+                    myModal.show();
                 })
 
                 $(".filter-combo").change(function () {
@@ -306,26 +296,25 @@ $total = $result->total();
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button class="close" aria-label="Close" type="button" data-dismiss="modal">
-                            <span aria-hidden="true">×</span></button>
-                        <h4 class="modal-title"><i class='fa fa-filter'></i> {{cbLang("filter_dialog_title")}}</h4>
+                        <h5 class="modal-title"><i class='bi bi-funnel'></i> {{cbLang("filter_dialog_title")}}</h5>
+                        <button class="btn-close" aria-label="Close" type="button" data-bs-dismiss="modal"></button>
                     </div>
                     <form method='get' action=''>
                         <div class="modal-body">
                             <?php foreach($columns as $key => $col):?>
                             <?php if (isset($col['image']) || isset($col['download']) || (isset($col['visible']) && $col['visible'] === FALSE)) continue;?>
 
-                            <div class='form-group'>
+                            <div class='mb-3'>
 
-                                <div class='row-filter-combo row'>
+                                <div class='row-filter-combo row g-2 align-items-center'>
 
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <strong>{{$col['label']}}</strong>
                                     </div>
 
                                     <div class='col-sm-3'>
                                         <select name='filter_column[{{$col["field_with"]}}][type]' data-type='{{$col["type_data"]}}'
-                                                class="filter-combo form-control">
+                                                class="filter-combo form-select">
                                             <option value=''>** {{cbLang("filter_select_operator_type")}}</option>
                                             @if(in_array($col['type_data'],['string','varchar','text','char']))
                                                 <option {{ (CRUDBooster::getTypeFilter($col["field_with"]) == 'like')?"selected":"" }} value='like'>{{cbLang("filter_like")}}</option> @endif
@@ -352,20 +341,19 @@ $total = $result->total();
                                                 <option {{ (CRUDBooster::getTypeFilter($col["field_with"]) == 'between')?"selected":"" }} value='between'>{{cbLang("filter_between")}}</option>@endif
                                             <option {{ (CRUDBooster::getTypeFilter($col["field_with"]) == 'empty')?"selected":"" }} value='empty'>{{cbLang("filter_empty_or_null")}}</option>
                                         </select>
-                                    </div><!--END COL_SM_4-->
+                                    </div>
 
-
-                                    <div class='col-sm-5'>
+                                    <div class='col-sm-4'>
                                         <input type='text' class='filter-value form-control'
                                                style="{{ (CRUDBooster::getTypeFilter($col["field_with"]) == 'between')?"display:none":"display:block"}}"
                                                disabled name='filter_column[{{$col["field_with"]}}][value]'
                                                value='{{ (!is_array(CRUDBooster::getValueFilter($col["field_with"])))?CRUDBooster::getValueFilter($col["field_with"]):"" }}'>
 
-                                        <div class='row between-group'
+                                        <div class='row between-group g-2'
                                              style="{{ (CRUDBooster::getTypeFilter($col["field_with"]) == 'between')?"display:block":"display:none" }}">
                                             <div class='col-sm-6'>
-                                                <div class='input-group {{ ($col["type_data"] == "time")?"bootstrap-timepicker":"" }}'>
-                                                    <span class="input-group-addon">{{cbLang("filter_from")}}:</span>
+                                                <div class='input-group input-group-sm'>
+                                                    <span class="input-group-text">{{cbLang("filter_from")}}:</span>
                                                     <input
                                                             {{ (CRUDBooster::getTypeFilter($col["field_with"]) != 'between')?"disabled":"" }}
                                                             type='text'
@@ -380,8 +368,8 @@ $total = $result->total();
                                                 </div>
                                             </div>
                                             <div class='col-sm-6'>
-                                                <div class='input-group {{ ($col["type_data"] == "time")?"bootstrap-timepicker":"" }}'>
-                                                    <span class="input-group-addon">{{cbLang("filter_to")}}:</span>
+                                                <div class='input-group input-group-sm'>
+                                                    <span class="input-group-text">{{cbLang("filter_to")}}:</span>
                                                     <input
                                                             {{ (CRUDBooster::getTypeFilter($col["field_with"]) != 'between')?"disabled":"" }}
                                                             type='text'
@@ -396,16 +384,15 @@ $total = $result->total();
                                                 </div>
                                             </div>
                                         </div>
-                                    </div><!--END COL_SM_6-->
-
+                                    </div>
 
                                     <div class='col-sm-2'>
-                                        <select class='form-control' name='filter_column[{{$col["field_with"]}}][sorting]'>
+                                        <select class='form-select' name='filter_column[{{$col["field_with"]}}][sorting]'>
                                             <option value=''>{{cbLang("filter_sorting")}}</option>
                                             <option {{ (CRUDBooster::getSortingFilter($col["field_with"]) == 'asc')?"selected":"" }} value='asc'>{{cbLang("filter_ascending")}}</option>
                                             <option {{ (CRUDBooster::getSortingFilter($col["field_with"]) == 'desc')?"selected":"" }} value='desc'>{{cbLang("filter_descending")}}</option>
                                         </select>
-                                    </div><!--END_COL_SM_2-->
+                                    </div>
 
                                 </div>
 
@@ -413,9 +400,9 @@ $total = $result->total();
                             <?php endforeach;?>
 
                         </div>
-                        <div class="modal-footer" align="right">
-                            <button class="btn btn-default" type="button" data-dismiss="modal">{{cbLang("button_close")}}</button>
-                            <button class="btn btn-default btn-reset" type="reset"
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">{{cbLang("button_close")}}</button>
+                            <button class="btn btn-outline-secondary btn-reset" type="reset"
                                     onclick='location.href="{{Request::get("lasturl")}}"'>{{cbLang("button_reset")}}</button>
                             <button class="btn btn-primary btn-submit" type="submit">{{cbLang("button_submit")}}</button>
                         </div>
@@ -423,92 +410,63 @@ $total = $result->total();
                         <input type="hidden" name="lasturl" value="{{Request::get('lasturl')?Request::get('lasturl'):Request::fullUrl()}}">
                     </form>
                 </div>
-                <!-- /.modal-content -->
             </div>
         </div>
-
-
-        <script>
-            $(function () {
-                $('.btn-filter-data').click(function () {
-                    $('#filter-data').modal('show');
-                })
-
-                $('.btn-export-data').click(function () {
-                    $('#export-data').modal('show');
-                })
-
-                var toggle_advanced_report_boolean = 1;
-                $(".toggle_advanced_report").click(function () {
-
-                    if (toggle_advanced_report_boolean == 1) {
-                        $("#advanced_export").slideDown();
-                        $(this).html("<i class='fa fa-minus-square-o'></i> {{cbLang('export_dialog_show_advanced')}}");
-                        toggle_advanced_report_boolean = 0;
-                    } else {
-                        $("#advanced_export").slideUp();
-                        $(this).html("<i class='fa fa-plus-square-o'></i> {{cbLang('export_dialog_show_advanced')}}");
-                        toggle_advanced_report_boolean = 1;
-                    }
-
-                })
-            })
-        </script>
 
         <!-- MODAL FOR EXPORT DATA-->
         <div class="modal fade" tabindex="-1" role="dialog" id='export-data'>
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button class="close" aria-label="Close" type="button" data-dismiss="modal">
-                            <span aria-hidden="true">×</span></button>
-                        <h4 class="modal-title"><i class='fa fa-download'></i> {{cbLang("export_dialog_title")}}</h4>
+                        <h5 class="modal-title"><i class='bi bi-download'></i> {{cbLang("export_dialog_title")}}</h5>
+                        <button class="btn-close" aria-label="Close" type="button" data-bs-dismiss="modal"></button>
                     </div>
 
                     <form method='post' target="_blank" action='{{ CRUDBooster::mainpath("export-data?t=".time()) }}'>
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         {!! CRUDBooster::getUrlParameters() !!}
                         <div class="modal-body">
-                            <div class="form-group">
-                                <label>{{cbLang("export_dialog_filename")}}</label>
+                            <div class="mb-3">
+                                <label class="form-label">{{cbLang("export_dialog_filename")}}</label>
                                 <input type='text' name='filename' class='form-control' required value='Report {{ $page_title ?? "Data" }} - {{date("d M Y")}}'/>
-                                <div class='help-block'>
+                                <div class='form-text'>
                                     {{cbLang("export_dialog_help_filename")}}
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label>{{cbLang("export_dialog_maxdata")}}</label>
+                            <div class="mb-3">
+                                <label class="form-label">{{cbLang("export_dialog_maxdata")}}</label>
                                 <input type='number' name='limit' class='form-control' required value='100' max="100000" min="1"/>
-                                <div class='help-block'>{{cbLang("export_dialog_help_maxdata")}}</div>
+                                <div class='form-text'>{{cbLang("export_dialog_help_maxdata")}}</div>
                             </div>
 
-                            <div class='form-group'>
-                                <label>{{cbLang("export_dialog_columns")}}</label><br/>
+                            <div class='mb-3'>
+                                <label class="form-label">{{cbLang("export_dialog_columns")}}</label><br/>
                                 @foreach($columns as $col)
-                                    <div class='checkbox inline'><label><input type='checkbox' checked name='columns[]'
-                                                                               value='{{$col["name"]}}'>{{$col["label"]}}</label></div>
+                                    <div class='form-check form-check-inline'>
+                                        <input class="form-check-input" type='checkbox' checked id="col_{{$col['name']}}" name='columns[]' value='{{$col["name"]}}'>
+                                        <label class="form-check-label" for="col_{{$col['name']}}">{{$col["label"]}}</label>
+                                    </div>
                                 @endforeach
                             </div>
 
-                            <div class="form-group">
-                                <label>{{cbLang("export_dialog_format_export")}}</label>
-                                <select name='fileformat' class='form-control'>
+                            <div class="mb-3">
+                                <label class="form-label">{{cbLang("export_dialog_format_export")}}</label>
+                                <select name='fileformat' class='form-select'>
                                     <option value='pdf'>PDF</option>
                                     <option value='xls'>Microsoft Excel (xls)</option>
                                     <option value='csv'>CSV</option>
                                 </select>
                             </div>
 
-                            <p><a href='javascript:void(0)' class='toggle_advanced_report'><i
-                                            class='fa fa-plus-square-o'></i> {{cbLang("export_dialog_show_advanced")}}</a></p>
+                            <p><a href='javascript:void(0)' class='toggle_advanced_report text-decoration-none'><i
+                                            class='bi bi-plus-square'></i> {{cbLang("export_dialog_show_advanced")}}</a></p>
 
                             <div id='advanced_export' style='display: none'>
 
-
-                                <div class="form-group">
-                                    <label>{{cbLang("export_dialog_page_size")}}</label>
-                                    <select class='form-control' name='page_size'>
+                                <div class="mb-3">
+                                    <label class="form-label">{{cbLang("export_dialog_page_size")}}</label>
+                                    <select class='form-select' name='page_size'>
                                         <option <?=(@$setting->default_paper_size == 'Letter') ? "selected" : ""?> value='Letter'>Letter</option>
                                         <option <?=(@$setting->default_paper_size == 'Legal') ? "selected" : ""?> value='Legal'>Legal</option>
                                         <option <?=(@$setting->default_paper_size == 'Ledger') ? "selected" : ""?> value='Ledger'>Ledger</option>
@@ -524,13 +482,13 @@ $total = $result->total();
                                         <option <?=$select?> value='B{{$i}}'>B{{$i}}</option>
                                         <?php endfor;?>
                                     </select>
-                                    <div class='help-block'><input type='checkbox' name='default_paper_size'
+                                    <div class='form-text'><input type='checkbox' class="form-check-input" name='default_paper_size'
                                                                    value='1'/> {{cbLang("export_dialog_set_default")}}</div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label>{{cbLang("export_dialog_page_orientation")}}</label>
-                                    <select class='form-control' name='page_orientation'>
+                                <div class="mb-3">
+                                    <label class="form-label">{{cbLang("export_dialog_page_orientation")}}</label>
+                                    <select class='form-select' name='page_orientation'>
                                         <option value='potrait'>Potrait</option>
                                         <option value='landscape'>Landscape</option>
                                     </select>
@@ -538,13 +496,12 @@ $total = $result->total();
                             </div>
 
                         </div>
-                        <div class="modal-footer" align="right">
-                            <button class="btn btn-default" type="button" data-dismiss="modal">{{cbLang("button_close")}}</button>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">{{cbLang("button_close")}}</button>
                             <button class="btn btn-primary btn-submit" type="submit">{{cbLang('button_submit')}}</button>
                         </div>
                     </form>
                 </div>
-                <!-- /.modal-content -->
             </div>
         </div>
     @endpush
