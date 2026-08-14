@@ -471,9 +471,8 @@
                                     <?php
 
                                     $type = $form["type"] ?: "text";
-                                    $types = base_path('vendor/crocodicstudio/crudbooster/src/views/default/type_components/'.$type.'/info.json');
-                                    $types = file_get_contents($types);
-                                    $types = json_decode($types);
+                                    $typesPath = __DIR__.'/../default/type_components/'.$type.'/info.json';
+                                    $types = file_exists($typesPath) ? json_decode(file_get_contents($typesPath)) : null;
 
                                     if($types):
                                     ?>

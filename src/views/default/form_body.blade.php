@@ -8,9 +8,9 @@ $name = $form['name'];
 
 if (in_array($type, $asset_already)) continue;
 ?>
-@if(file_exists(base_path('/vendor/crocodicstudio/crudbooster/src/views/default/type_components/'.$type.'/asset.blade.php')))
+@if(view()->exists('crudbooster::default.type_components.'.$type.'.asset'))
     @include('crudbooster::default.type_components.'.$type.'.asset')
-@elseif(file_exists(resource_path('views/vendor/crudbooster/type_components/'.$type.'/asset.blade.php')))
+@elseif(view()->exists('vendor.crudbooster.type_components.'.$type.'.asset'))
     @include('vendor.crudbooster.type_components.'.$type.'.asset')
 @endif
 <?php
@@ -82,9 +82,9 @@ if ($type == 'header') {
 }
 
 ?>
-@if(file_exists(base_path('/vendor/crocodicstudio/crudbooster/src/views/default/type_components/'.$type.'/component.blade.php')))
+@if(view()->exists('crudbooster::default.type_components.'.$type.'.component'))
     @include('crudbooster::default.type_components.'.$type.'.component')
-@elseif(file_exists(resource_path('views/vendor/crudbooster/type_components/'.$type.'/component.blade.php')))
+@elseif(view()->exists('vendor.crudbooster.type_components.'.$type.'.component'))
     @include('vendor.crudbooster.type_components.'.$type.'.component')
 @else
     <p class='text-danger'>{{$type}} is not found in type component system</p><br/>
