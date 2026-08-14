@@ -34,7 +34,7 @@
     <input type='hidden' name='_token' value='{{csrf_token()}}'/>
     <table id='table_dashboard' class="table table-hover table-striped table-bordered m-0 align-middle">
         <thead>
-        <tr class="table-secondary">
+        <tr>
             <?php if($button_bulk_action):?>
             <th width='3%' class="text-center"><input type='checkbox' id='checkall' class="form-check-input"/></th>
             <?php endif;?>
@@ -162,8 +162,8 @@
 
 </form><!--END FORM TABLE-->
 
-<div class="row p-3 align-items-center">
-    <div class="col-md-8">
+<div class="row p-3 align-items-center g-3">
+    <div class="col-md-6 pagination-wrapper">
         {!! urldecode(str_replace("/?","?",$result->appends(Request::all())->render())) !!}
     </div>
     <?php
@@ -171,7 +171,7 @@
     $to = $result->perPage() * $result->currentPage() - $result->perPage() + $result->count();
     $total = $result->total();
     ?>
-    <div class="col-md-4 text-end">
+    <div class="col-md-6 text-end">
         <span class="text-secondary">{{ cbLang("filter_rows_total") }} : {{ $from }} {{ cbLang("filter_rows_to") }} {{ $to }} {{ cbLang("filter_rows_of") }} {{ $total }}</span>
     </div>
 </div>
