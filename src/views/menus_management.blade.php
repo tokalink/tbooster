@@ -67,7 +67,7 @@
                     var label = $(originalOption).text();
                     var val = $(originalOption).val();
                     if (!val) return label;
-                    var $resp = $('<span><i style="margin-top:5px" class="float-end ' + $(originalOption).val() + '"></i> ' + $(originalOption).data('label') + '</span>');
+                    var $resp = $('<span class="d-flex align-items-center justify-content-between w-100"><span>' + $(originalOption).data('label') + '</span><i class="' + $(originalOption).val() + '"></i></span>');
                     return $resp;
                 }
 

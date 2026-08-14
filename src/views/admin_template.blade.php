@@ -22,7 +22,9 @@
     <!-- OverlayScrollbars -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/styles/overlayscrollbars.min.css" crossorigin="anonymous" />
 
-    <!-- AdminLTE 4 CSS -->
+    <!-- AdminLTE 4 CSS & Select2 Theme -->
+    <link rel="stylesheet" href="{{ asset('vendor/crudbooster/assets/select2/dist/css/select2.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/crudbooster/assets/adminlte4/css/adminlte-select2.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('vendor/crudbooster/assets/adminlte4/css/adminlte.min.css') }}" />
 
     <link rel='stylesheet' href='{{asset("vendor/crudbooster/assets/css/main.css") }}'/>

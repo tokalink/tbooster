@@ -9,6 +9,9 @@
 <!-- OverlayScrollbars -->
 <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js" crossorigin="anonymous"></script>
 
+<!-- Select2 JS -->
+<script src="{{ asset('vendor/crudbooster/assets/select2/dist/js/select2.full.min.js') }}"></script>
+
 <!-- AdminLTE 4 App -->
 <script src="{{ asset('vendor/crudbooster/assets/adminlte4/js/adminlte.min.js') }}"></script>
 
