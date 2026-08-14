@@ -4,6 +4,20 @@
 
     @push('head')
         <link href="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+        <style>
+            .selected_text {
+                cursor: pointer;
+            }
+            .selected_text:hover {
+                color: #76a400
+            }
+            tfoot td {
+                background: var(--bs-secondary-bg, #343a40);
+            }
+            .tr-response {
+                cursor: pointer
+            }
+        </style>
     @endpush
     @push('bottom')
         <script src="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
@@ -14,22 +28,23 @@
         </script>
     @endpush
 
-    <ul class="nav nav-tabs">
-        <li><a href="{{ CRUDBooster::mainpath() }}"><i class='fa fa-file'></i> API Documentation</a></li>
-        <li><a href="{{ CRUDBooster::mainpath('screet-key') }}"><i class='fa fa-key'></i> API Secret Key</a></li>
-        <li class='active'><a href="{{ CRUDBooster::mainpath('generator') }}"><i class='fa fa-cog'></i> API Generator</a></li>
+    <ul class="nav nav-tabs mb-3">
+        <li class="nav-item"><a class="nav-link" href="{{ CRUDBooster::mainpath() }}"><i class='bi bi-file-earmark-text me-1'></i> API Documentation</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ CRUDBooster::mainpath('screet-key') }}"><i class='bi bi-key me-1'></i> API Secret Key</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{{ CRUDBooster::mainpath('generator') }}"><i class='bi bi-gear me-1'></i> API Generator</a></li>
     </ul>
 
-    <div class='box'>
-
-        <div class='box-body'>
+    <div class='card mb-4'>
+        <div class='card-header'>
+            <h5 class='card-title mb-0'>API Generator</h5>
+        </div>
+        <div class='card-body'>
             @push('bottom')
                 <script>
                     $(function () {
                         jQuery.fn.selectText = function () {
                             var doc = document;
                             var element = this[0];
-                            console.log(this, element);
                             if (doc.body.createTextRange) {
                                 var range = document.body.createTextRange();
                                 range.moveToElementText(element);
@@ -44,10 +59,8 @@
                         };
 
                         $(document).on("click", ".selected_text", function () {
-                            console.log("clicked");
                             $(this).selectText();
                         });
-
 
                         $('#input-nama').on('input', function () {
                             var v = $(this).val();
@@ -70,6 +83,8 @@
 
                             if(v == "save_edit" || v == "delete") {
                                 $("#response-wrapper").hide();
+                            } else {
+                                $("#response-wrapper").show();
                             }
 
                             $('.method_type').prop('checked', false);
@@ -86,16 +101,14 @@
                             }
                         })
 
-
                         $(document).on('click', '.tr-response', function () {
-                            console.log('tr response clicked');
                             var is_check = $(this).find('select').val();
                             if (is_check == '1') {
                                 $(this).find('select').val(0);
-                                $(this).removeClass('success');
+                                $(this).removeClass('table-success');
                             } else {
                                 $(this).find('select').val(1);
-                                $(this).addClass('success');
+                                $(this).addClass('table-success');
                             }
                         })
                     })
@@ -111,16 +124,12 @@
                         if (tipe_action == '') return false;
 
                         no_params += 1;
-                        $('#table-response tbody').append("<tr><td>" + no_params + "</td><td>api_status</td><td>boolean</td><td>-</td><td><select class='form-control' disabled><option>YES</option></select></td><td>-</td></tr>");
+                        $('#table-response tbody').append("<tr><td>" + no_params + "</td><td>api_status</td><td>boolean</td><td>-</td><td><select class='form-select form-select-sm' disabled><option>YES</option></select></td><td>-</td></tr>");
                         no_params += 1;
-                        $('#table-response tbody').append("<tr><td>" + no_params + "</td><td>api_message</td><td>string</td><td>-</td><td><select class='form-control' disabled><option>YES</option></select></td><td>-</td></tr>");
+                        $('#table-response tbody').append("<tr><td>" + no_params + "</td><td>api_message</td><td>string</td><td>-</td><td><select class='form-select form-select-sm' disabled><option>YES</option></select></td><td>-</td></tr>");
 
-                        if (tipe_action == 'list') {
-                            $('#table-response tbody').append("<tr class='info' style='font-weight'><td>#</td><td>data</td><td>&nbsp;</td><td>-</td><td>-</td><td>-</td></tr>");
-                        }
-
-                        if (tipe_action == 'detail') {
-                            $('#table-response tbody').append("<tr class='info' style='font-weight'><td>#</td><td>data</td><td>&nbsp;</td><td>-</td><td>-</td><td>-</td></tr>");
+                        if (tipe_action == 'list' || tipe_action == 'detail') {
+                            $('#table-response tbody').append("<tr class='table-info fw-bold'><td>#</td><td>data</td><td>&nbsp;</td><td>-</td><td>-</td><td>-</td></tr>");
                         }
 
                         no_params = 0;
@@ -164,7 +173,7 @@
                                 }
 
                                 no_params += 1;
-                                $('#table-response tbody').append("<tr class='success tr-response'><td>" + no_params + "</td><td>&nbsp;&nbsp;- " + obj.name + "<input type='hidden' name='responses_name[]' value='" + obj.name + "'/></td><td>" + obj_type + "<input type='hidden' name='responses_type[]' value='" + obj_type + "'/></td><td>-<input type='hidden' name='responses_subquery[]' value=''/></td><td><select class='form-control responses_used' name='responses_used[]'><option value='1'>YES</option><option value='0'>NO</option></select></td><td><a class='btn btn-danger' href='javascript:void(0)' onclick='deleteResponse(this)'><i class='fa fa-ban'></i></a></td></tr>");
+                                $('#table-response tbody').append("<tr class='table-success tr-response'><td>" + no_params + "</td><td>&nbsp;&nbsp;- " + obj.name + "<input type='hidden' name='responses_name[]' value='" + obj.name + "'/></td><td>" + obj_type + "<input type='hidden' name='responses_type[]' value='" + obj_type + "'/></td><td>-<input type='hidden' name='responses_subquery[]' value=''/></td><td><select class='form-select form-select-sm responses_used' name='responses_used[]'><option value='1'>YES</option><option value='0'>NO</option></select></td><td><a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteResponse(this)'><i class='bi bi-x-circle'></i></a></td></tr>");
                             })
                         })
 
@@ -206,7 +215,6 @@
                                     no_params += 1;
                                 }
 
-
                                 switch (field_type) {
                                     default:
                                     case 'varchar':
@@ -241,7 +249,6 @@
                                         break;
                                 }
 
-
                                 $(this).find('td:nth-child(1)').text(no_params);
                                 $(this).find('td:nth-child(2) input').val(field_name);
                                 $(this).find('td:nth-child(3) select').val(type);
@@ -260,8 +267,7 @@
                                     $(this).find('td:nth-child(6) select').val('1');
                                 }
 
-
-                                $(this).find('.col-delete').html("<a class='btn btn-danger' href='javascript:void(0)' onclick='deleteParam(this)'><i class='fa fa-ban'></i></a>");
+                                $(this).find('.col-delete').html("<a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteParam(this)'><i class='bi bi-x-circle'></i></a>");
                                 i += 1;
                             })
                         })
@@ -270,7 +276,7 @@
                     }
 
                     function init_data_parameters() {
-                                @if(!empty($parameters))
+                        @if(!empty($parameters))
 
                         var resp = {!!$parameters!!};
                         var tipe_action = $('#tipe_action').val();
@@ -291,14 +297,11 @@
                             var used = resp[i].used;
                             var config = resp[i].config;
 
-                            console.log(field_name + ' - ' + field_type);
-
                             if (tipe_action == 'save_add' && field_name == 'id') {
                                 $(this).remove();
                             } else {
                                 no_params += 1;
                             }
-
 
                             switch (field_type) {
                                 default:
@@ -343,18 +346,17 @@
                             $(this).find('td:nth-child(5) select').val(required);
                             $(this).find('td:nth-child(6) select').val(used);
 
-                            $(this).find('.col-delete').html("<a class='btn btn-danger' href='javascript:void(0)' onclick='deleteParam(this)'><i class='fa fa-ban'></i></a>");
+                            $(this).find('.col-delete').html("<a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteParam(this)'><i class='bi bi-x-circle'></i></a>");
                             i += 1;
                         })
 
                         $('#table-parameters tfoot').show();
 
                         @endif
-                    } //end function init_data_parameter
-
+                    }
 
                     function init_data_responses() {
-                                @if(!empty($responses))
+                        @if(!empty($responses))
 
                         var t = $('#combo_tabel').val();
                         var type = 'list';
@@ -366,12 +368,12 @@
                         if (tipe_action == '') return false;
 
                         no_params += 1;
-                        $('#table-response tbody').append("<tr><td>" + no_params + "</td><td>api_status</td><td>boolean</td><td>-</td><td><select class='form-control' disabled><option>YES</option></select></td><td>-</td></tr>");
+                        $('#table-response tbody').append("<tr><td>" + no_params + "</td><td>api_status</td><td>boolean</td><td>-</td><td><select class='form-select form-select-sm' disabled><option>YES</option></select></td><td>-</td></tr>");
                         no_params += 1;
-                        $('#table-response tbody').append("<tr><td>" + no_params + "</td><td>api_message</td><td>string</td><td>-</td><td><select class='form-control' disabled><option>YES</option></select></td><td>-</td></tr>");
+                        $('#table-response tbody').append("<tr><td>" + no_params + "</td><td>api_message</td><td>string</td><td>-</td><td><select class='form-select form-select-sm' disabled><option>YES</option></select></td><td>-</td></tr>");
 
-                        if (tipe_action == 'list') {
-                            $('#table-response tbody').append("<tr class='info' style='font-weight'><td>#</td><td>data</td><td>&nbsp;</td><td>-</td><td>-</td><td>-</td></tr>");
+                        if (tipe_action == 'list' || tipe_action == 'detail') {
+                            $('#table-response tbody').append("<tr class='table-info fw-bold'><td>#</td><td>data</td><td>&nbsp;</td><td>-</td><td>-</td><td>-</td></tr>");
                         }
 
                         no_params = 0;
@@ -381,8 +383,7 @@
                             no_params += 1;
                             var used_yes = (obj.used == '1') ? "selected" : "";
                             var used_no = (obj.used == '0') ? "selected" : "";
-                            var tr_success = (obj.used == '1') ? "success" : "";
-
+                            var tr_success = (obj.used == '1') ? "table-success" : "";
 
                             switch (obj.type) {
                                 default:
@@ -425,36 +426,29 @@
 
                             if (obj.subquery == '') {
                                 input_subquery = "-<input type='hidden' name='responses_subquery[]' value='" + obj.subquery + "'/>";
-                                delete_btn = "<a class='btn btn-danger' href='javascript:void(0)' onclick='deleteResponse(this)'><i class='fa fa-ban'></i></a>";
+                                delete_btn = "<a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteResponse(this)'><i class='bi bi-x-circle'></i></a>";
                             } else {
-                                if (obj.subquery) {
-                                    var subquery = obj.subquery;
-                                } else {
-                                    var subquery = '';
-                                }
+                                var subquery = obj.subquery ? obj.subquery : '';
                                 input_subquery = subquery + "<input type='hidden' name='responses_subquery[]' value='" + subquery + "'/>";
-                                delete_btn = "<a class='btn btn-danger' href='javascript:void(0)' onclick='deleteResponse(this)'><i class='fa fa-ban'></i></a>";
+                                delete_btn = "<a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteResponse(this)'><i class='bi bi-x-circle'></i></a>";
                             }
 
-                            $('#table-response tbody').append("<tr class='" + tr_success + " tr-response'><td>" + no_params + "</td><td>&nbsp;&nbsp;- " + obj.name + "<input type='hidden' name='responses_name[]' value='" + obj.name + "'/></td><td>" + obj_type + "<input type='hidden' name='responses_type[]' value='" + obj_type + "'/></td><td>" + input_subquery + "</td><td><select class='form-control responses_used' name='responses_used[]'><option " + used_yes + " value='1'>YES</option><option " + used_no + " value='0'>NO</option></select></td><td>" + delete_btn + "</td></tr>");
+                            $('#table-response tbody').append("<tr class='" + tr_success + " tr-response'><td>" + no_params + "</td><td>&nbsp;&nbsp;- " + obj.name + "<input type='hidden' name='responses_name[]' value='" + obj.name + "'/></td><td>" + obj_type + "<input type='hidden' name='responses_type[]' value='" + obj_type + "'/></td><td>" + input_subquery + "</td><td><select class='form-select form-select-sm responses_used' name='responses_used[]'><option " + used_yes + " value='1'>YES</option><option " + used_no + " value='0'>NO</option></select></td><td>" + delete_btn + "</td></tr>");
                         })
 
                         $('#table-response tfoot').show();
 
                         @endif
-                    } //end function init_data_responses
+                    }
 
                     $(function () {
-
                         @if(!empty($row))
                         init_data_parameters();
                         init_data_responses();
                         @endif
 
                         $('#combo_tabel,#tipe_action').change(function () {
-
                             load_response();
-
                             load_parameters();
                         })
 
@@ -463,8 +457,6 @@
                             v = v.replace(/[^0-9a-z]/gi, '_').toLowerCase();
                             $(this).val(v);
                         })
-
-
                     })
 
                     function deleteParam(t) {
@@ -477,17 +469,16 @@
                     }
 
                     function addParam() {
-
                         var htm = $('#table-parameters tfoot tr').clone();
 
                         var val = $('#table-parameters tfoot tr td:nth-child(2) input').val();
                         var validation = $('#table-parameters tfoot tr td:nth-child(3) select').val();
-                        var config = $('#table-parameters tfoot tr td:nth-child(4) select').val();
+                        var config = $('#table-parameters tfoot tr td:nth-child(4) input').val();
                         var m = $('#table-parameters tfoot tr td:nth-child(5) select').val();
                         var u = $('#table-parameters tfoot tr td:nth-child(6) select').val();
 
                         htm.find('td:nth-child(3)').find('select').val(validation);
-                        htm.find('td:nth-child(4)').find('select').val(config);
+                        htm.find('td:nth-child(4)').find('input').val(config);
                         htm.find('td:nth-child(5)').find('select').val(m);
                         htm.find('td:nth-child(6)').find('select').val(u);
 
@@ -503,34 +494,26 @@
                         $('#table-parameters tbody tr').each(function () {
                             no_params += 1;
                             $(this).find('td:nth-child(1)').text(no_params);
-                            $(this).find('.col-delete').html("<a class='btn btn-danger' href='javascript:void(0)' onclick='deleteParam(this)'><i class='fa fa-ban'></i></a>");
+                            $(this).find('.col-delete').html("<a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteParam(this)'><i class='bi bi-x-circle'></i></a>");
                         });
                     }
 
                     function addResponse() {
-                        console.log('addResponse');
-
                         var val = $('#table-response tfoot tr td:nth-child(2) input').val();
                         var validation = $('#table-response tfoot tr td:nth-child(3) select').val();
                         var subquery = $('#table-response tfoot tr td:nth-child(4) input').val();
                         var is_check = $('#table-response tfoot tr td:nth-child(5) select').val();
 
-                        var check_yes, check_no;
-
-                        if (is_check == '1') {
-                            check_yes = 'selected';
-                        } else {
-                            check_no = 'selected';
-                        }
+                        var check_yes = (is_check == '1') ? 'selected' : '';
+                        var check_no = (is_check == '0') ? 'selected' : '';
 
                         var htm = "<tr class='tr-response tr-additional'>";
                         htm += "<td>#</td>";
                         htm += "<td>&nbsp;&nbsp;- " + val + "<input type='hidden' name='responses_name[]' value='" + val + "'/></td><td>" + validation + "<input type='hidden' name='responses_type[]' value='" + validation + "'/></td><td>" + subquery + "<input type='hidden' name='responses_subquery[]' value='" + subquery + "'/></td>";
-                        htm += "<td><select class='form-control responses_used' name='responses_used[]'><option " + check_yes + " value='1'>YES</option><option " + check_no + " value='0'>NO</option></select></td>";
-                        htm += "<td><a class='btn btn-danger' href='javascript:void(0)' onclick='deleteResponse(this)'><i class='fa fa-ban'></i></a></td></tr>";
+                        htm += "<td><select class='form-select form-select-sm responses_used' name='responses_used[]'><option " + check_yes + " value='1'>YES</option><option " + check_no + " value='0'>NO</option></select></td>";
+                        htm += "<td><a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteResponse(this)'><i class='bi bi-x-circle'></i></a></td></tr>";
 
                         if (val == '') return false;
-                        // if(subquery == '') return false;
 
                         $('#table-response .row-no-data').remove();
                         $('#table-response tbody').append(htm);
@@ -541,17 +524,16 @@
                         var no_params = 0;
                         $('#table-response tbody tr').each(function () {
                             no_params += 1;
-
                             $(this).addClass('tr-response');
 
                             if ($(this).hasClass('tr-additional')) {
                                 if ($(this).find('select').val() == '1') {
-                                    $(this).addClass('success');
+                                    $(this).addClass('table-success');
                                 }
                             }
 
                             $(this).find('td:nth-child(1)').text(no_params);
-                            $(this).find('.col-delete').html("<a class='btn btn-danger' href='javascript:void(0)' onclick='deleteResponse(this)'><i class='fa fa-ban'></i></a>");
+                            $(this).find('.col-delete').html("<a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='deleteResponse(this)'><i class='bi bi-x-circle'></i></a>");
                         });
                     }
 
@@ -567,207 +549,187 @@
                 </script>
             @endpush
 
-            @push('head')
-                <style>
-                    .selected_text {
-                        cursor: pointer;
-                    }
-
-                    .selected_text:hover {
-                        color: #76a400
-                    }
-
-                    tfoot td {
-                        background: #eeeeee
-                    }
-
-                    .tr-response {
-                        cursor: pointer
-                    }
-                </style>
-            @endpush
-
-
             <form method='post' action='{{ route("ApiCustomControllerPostSaveApiCustom")}}'>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                 <input type="hidden" name="id" value="{{@$row->id}}">
-                <div class='row'>
+
+                <div class='row g-3 mb-3'>
                     <div class='col-sm-8'>
-                        <div class='form-group'>
-                            <label>API Name</label>
-                            <input type='text' class='form-control' value='{{@$row->nama}}' required name='nama' id='input-nama'/>
-                        </div>
+                        <label class="form-label fw-bold">API Name</label>
+                        <input type='text' class='form-control' value='{{@$row->nama}}' required name='nama' id='input-nama'/>
                     </div>
 
                     <div class='col-sm-4'>
-                        <div class='form-group'>
-                            <label>Table</label>
-                            <select id='combo_tabel' name='tabel' required class='form-control'>
-                                <option value=''>** Choose a Table</option>
-                                @foreach($tables as $tab)
-                                    <option {{(@$row->tabel == $tab)?"selected":""}} value='{{$tab}}'>{{$tab}}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <label class="form-label fw-bold">Table</label>
+                        <select id='combo_tabel' name='tabel' required class='form-select'>
+                            <option value=''>** Choose a Table</option>
+                            @foreach($tables as $tab)
+                                <option {{(@$row->tabel == $tab)?"selected":""}} value='{{$tab}}'>{{$tab}}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
 
-                <div class='row'>
-                    <div class='col-sm-8'>
-                        <div class='form-group'>
-                            <label>API Slug</label>
-                            <div class='input-group'>
-                                <span class="input-group-addon" id="basic-addon1" style="background:#eeeeee">{{url("api")}}/</span>
-                                <input type='text' class='form-control' value='{{@$row->permalink}}' required name='permalink' id='input-permalink'/>
+                <div class='row g-3 mb-4'>
+                    <div class='col-sm-6'>
+                        <label class="form-label fw-bold">API Slug</label>
+                        <div class='input-group'>
+                            <span class="input-group-text">{{url("api")}}/</span>
+                            <input type='text' class='form-control' value='{{@$row->permalink}}' required name='permalink' id='input-permalink'/>
+                        </div>
+                    </div>
+                    <div class='col-sm-3'>
+                        <label class="form-label fw-bold">Action Type</label>
+                        <select id='tipe_action' name='aksi' required class='form-select'>
+                            <option value=''>** Select Action</option>
+                            <option value='list' {{ (@$row->aksi == 'list')?"selected":"" }} >LISTING</option>
+                            <option value='detail' {{ (@$row->aksi == 'detail')?"selected":"" }}>DETAIL / READ</option>
+                            <option value='save_add' {{ (@$row->aksi == 'save_add')?"selected":"" }}>CREATE / ADD</option>
+                            <option value='save_edit' {{ (@$row->aksi == 'save_edit')?"selected":"" }}>UPDATE</option>
+                            <option value='delete' {{ (@$row->aksi == 'delete')?"selected":"" }}>DELETE</option>
+                        </select>
+                    </div>
+                    <div class='col-sm-3'>
+                        <label class="form-label fw-bold d-block">Method Type</label>
+                        <div class="mt-2">
+                            <div class='form-check form-check-inline'>
+                                <input class='form-check-input method_type' type='radio' required {{ (@$row->method_type == 'get')?"checked":"" }} name='method_type' id="method_get" value='get'/>
+                                <label class="form-check-label" for="method_get">GET</label>
+                            </div>
+                            <div class='form-check form-check-inline'>
+                                <input class='form-check-input method_type' type='radio' {{ (@$row->method_type == 'post')?"checked":"" }} name='method_type' id="method_post" value='post'/>
+                                <label class="form-check-label" for="method_post">POST</label>
                             </div>
                         </div>
                     </div>
-                    <div class='col-sm-2'>
-                        <div class='form-group'>
-                            <label>Action Type</label>
-                            <select id='tipe_action' name='aksi' required class='form-control'>
-                                <option value=''>** Select Action</option>
-                                <option value='list' {{ (@$row->aksi == 'list')?"selected":"" }} >LISTING</option>
-                                <option value='detail' {{ (@$row->aksi == 'detail')?"selected":"" }}>DETAIL / READ</option>
-                                <option value='save_add' {{ (@$row->aksi == 'save_add')?"selected":"" }}>CREATE / ADD</option>
-                                <option value='save_edit' {{ (@$row->aksi == 'save_edit')?"selected":"" }}>UPDATE</option>
-                                <option value='delete' {{ (@$row->aksi == 'delete')?"selected":"" }}>DELETE</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class='col-sm-2'>
-                        <div class='form-group'>
-                            <label>Method Type</label>
-                            <br/>
-                            <label class='radio-inline'>
-                                <input type='radio' required class='method_type' {{ (@$row->method_type == 'get')?"checked":"" }} name='method_type'
-                                       value='get'/> GET
-                            </label>
-                            <label class='radio-inline'>
-                                <input type='radio' class='method_type' {{ (@$row->method_type == 'post')?"checked":"" }} name='method_type' value='post'/> POST
-                            </label>
+                </div>
 
-                        </div>
+                <div class='mb-4'>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <label class="form-label fw-bold mb-0"><i class='bi bi-gear me-1'></i> Parameters</label>
+                        <button type="button" class='btn btn-sm btn-outline-primary' onclick="load_parameters()"><i class='bi bi-arrow-repeat me-1'></i> Reset</button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table id='table-parameters' class='table table-striped table-bordered align-middle'>
+                            <thead>
+                            <tr>
+                                <th width="3%">No</th>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Laravel Validation / Description / Value</th>
+                                <th width="10%">Mandatory</th>
+                                <th width="10%">Enable</th>
+                                <th width="5%">-</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class='row-no-data'>
+                                <td colspan='7' class="text-center text-muted">There is no data</td>
+                            </tr>
+                            </tbody>
+                            <tfoot style="display:none">
+                            <tr>
+                                <td>#</td>
+                                <td width="20%"><input class='form-control form-control-sm' name='params_name[]' type='text'/></td>
+                                <td width="20%">
+                                    <select class='form-select form-select-sm' name='params_type[]'>
+                                        <optgroup label='Common Validation'>
+                                            <option value='string'>String</option>
+                                            <option value='integer'>Integer</option>
+                                            <option value='email'>Email</option>
+                                            <option value='image'>Image (jpeg, png, bmp, gif, or svg)</option>
+                                            <option value='file'>File Upload</option>
+                                            <option value='exists'>Exists (table,column)</option>
+                                            <option value='unique'>Unique (table,column,except)</option>
+                                            <option value='password'>Password</option>
+                                            <option value='search'>Search</option>
+                                            <option value='custom'>Custom (Not In Table)</option>
+                                        </optgroup>
+                                        <optgroup label='Other Validation'>
+                                            <option value='array'>Array</option>
+                                            <option value='alpha'>Alpha</option>
+                                            <option value='alpha_num'>Alpha Numeric</option>
+                                            <option value='alpha_spaces'>Alpha Spaces</option>
+                                            <option value='base64_file'>Base64 File</option>
+                                            <option value='boolean'>Boolean</option>
+                                            <option value='date'>Date (Y-m-d)</option>
+                                            <option value='date_format:Y-m-d H:i:s'>DateTime (Y-m-d H:i:s)</option>
+                                            <option value='date_format'>Date Format Custom</option>
+                                            <option value='digits'>Digits</option>
+                                            <option value='digits_between'>Digits Between (Min,Max)</option>
+                                            <option value='in'>In (a,b,c)</option>
+                                            <option value='json'>Json Valid</option>
+                                            <option value='mimes'>Mimes Type</option>
+                                            <option value='min'>Min</option>
+                                            <option value='max'>Max</option>
+                                            <option value='numeric'>Numeric</option>
+                                            <option value='not_in'>Not In (a,b,c)</option>
+                                            <option value='url'>URL Valid</option>
+                                        </optgroup>
+                                        <optgroup label='Other'>
+                                            <option value='ref'>Child Table References</option>
+                                        </optgroup>
+                                    </select>
+                                </td>
+                                <td><input class='form-control form-control-sm' type='text' name='params_config[]'></td>
+                                <td>
+                                    <select class='form-select form-select-sm params_required' name='params_required[]'>
+                                        <option value='1'>YES</option>
+                                        <option value='0'>NO</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class='form-select form-select-sm params_used' name='params_used[]'>
+                                        <option value='1'>YES</option>
+                                        <option value='0'>NO</option>
+                                    </select>
+                                </td>
+                                <td class='col-delete'>
+                                    <a class='btn btn-sm btn-primary' href='javascript:void(0)' onclick='addParam()'><i class='bi bi-plus-lg'></i></a>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div class="form-text text-muted mt-1">
+                        To set as comment at description, add prefix * (asterisk) before description. Otherwise, it will be set as default value.
                     </div>
                 </div>
 
-
-                <div class='form-group'>
-                    <div class="clearfix">
-                        <label><i class='fa fa-cog'></i> Parameters</label>
-                        <a class='pull-right btn btn-xs btn-primary' href='javascript:void(0)' onclick="load_parameters()"><i class='fa fa-refresh'></i>
-                            Reset</a>
+                <div id="response-wrapper" class="mb-4" style="display: {{ isset($row)&&in_array(@$row->aksi,['save_edit','delete'])?"none":"block" }}">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <label class="form-label fw-bold mb-0"><i class='bi bi-gear me-1'></i> Response</label>
+                        <button type="button" class='btn btn-sm btn-outline-primary' onclick='load_response()'><i class='bi bi-arrow-repeat me-1'></i> Reset</button>
                     </div>
-
-                    <table id='table-parameters' class='table table-striped table-bordered'>
-                        <thead>
-                        <tr>
-                            <th width="3%">No</th>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Laravel Validation / Description / Value</th>
-                            <th width="8%" title='is Mandatory ?'>Mandatory</th>
-                            <th width="8%" title='is used ?'>Enable</th>
-                            <th width="5%">-</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class='row-no-data'>
-                            <td colspan='7'>There is no data</td>
-                        </tr>
-                        </tbody>
-                        <tfoot style="display:none">
-                        <tr>
-                            <td>#</td>
-                            <td width="20%"><input class='form-control' name='params_name[]' type='text'/></td>
-                            <td width="20%"><select class='form-control' name='params_type[]'>
-                                    <optgroup label='Common Validation'>
-                                        <option value='string'>String</option>
-                                        <option value='integer'>Integer</option>
-                                        <option value='email'>Email</option>
-                                        <option value='image'>Image (jpeg, png, bmp, gif, or svg)</option>
-                                        <option value='file'>File Upload</option>
-                                        <option value='exists'>Exists (table,column)</option>
-                                        <option value='unique'>Unique (table,column,except)</option>
-                                        <option value='password'>Password</option>
-                                        <option value='search'>Search</option>
-                                        <option value='custom'>Custom (Not In Table)</option>
-                                    </optgroup>
-                                    <optgroup label='Other Validation'>
-                                        <option value='array'>Array</option>
-                                        <option value='alpha'>Alpha</option>
-                                        <option value='alpha_num'>Alpha Numeric</option>
-                                        <option value='alpha_spaces'>Alpha Spaces</option>
-                                        <option value='base64_file'>Base64 File</option>
-                                        <option value='boolean'>Boolean</option>
-                                        <option value='date'>Date (Y-m-d)</option>
-                                        <option value='date_format:Y-m-d H:i:s'>DateTime (Y-m-d H:i:s)</option>
-                                        <option value='date_format'>Date Format Custom</option>
-                                        <option value='digits'>Digits</option>
-                                        <option value='digits_between'>Digits Between (Min,Max)</option>
-                                        <option value='in'>In (a,b,c)</option>
-                                        <option value='json'>Json Valid</option>
-                                        <option value='mimes'>Mimes Type</option>
-                                        <option value='min'>Min</option>
-                                        <option value='max'>Max</option>
-                                        <option value='numeric'>Numeric</option>
-                                        <option value='not_in'>Not In (a,b,c)</option>
-                                        <option value='url'>URL Valid</option>
-                                    </optgroup>
-                                    <optgroup label='Other'>
-                                        <option value='ref'>Child Table References</option>
-                                    </optgroup>
-                                </select></td>
-                            <td><input class='form-control' type='text' name='params_config[]'></td>
-                            <td><select class='form-control params_required' name='params_required[]'>
-                                    <option value='1'>YES</option>
-                                    <option value='0'>NO</option>
-                                </select></td>
-                            <td><select class='form-control params_used' name='params_used[]'>
-                                    <option value='1'>YES</option>
-                                    <option value='0'>NO</option>
-                                </select></td>
-                            <td class='col-delete'><a class='btn btn-primary' href='javascript:void(0)' onclick='addParam()'><i class='fa fa-plus'></i></a></td>
-                        </tr>
-                        </tfoot>
-                    </table>
-
-                    <div class="help-block">
-                        To set as comment at description. Add prefix * (asterisk) before description. Unless will be set as default value.
-                    </div>
-                </div>
-
-                <div id="response-wrapper" style="display: {{ isset($row)&&in_array(@$row->aksi,['save_edit','delete'])?"none":"block" }}">
-                    <div class='form-group'>
-                        <div class='clearfix'>
-                            <label><i class='fa fa-cog'></i> Response</label>
-                            <a class='pull-right btn btn-xs btn-primary' href='javascript:void(0)' onclick='load_response()'><i class='fa fa-refresh'></i> Reset</a>
-                        </div>
-                        <div id='response'>
-                            <table id='table-response' class='table table-striped table-bordered'>
+                    <div id='response'>
+                        <div class="table-responsive">
+                            <table id='table-response' class='table table-striped table-bordered align-middle'>
                                 <thead>
                                 <tr>
                                     <th width="3%">No</th>
                                     <th>Name</th>
                                     <th>Type</th>
                                     <th>Sub Query</th>
-                                    <th width="8%">Enable</th>
-                                    <th width="3%">-</th>
+                                    <th width="10%">Enable</th>
+                                    <th width="5%">-</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr class='row-no-data'>
-                                    <td colspan='7'>There is no data</td>
+                                    <td colspan='6' class="text-center text-muted">There is no data</td>
                                 </tr>
                                 </tbody>
                                 <tfoot style="display:none">
                                 <tr class='tr-additional'>
                                     <td>#</td>
-                                    <td width="20%"><input placeholder='E.g : grand_total' name='responses_name[]' class='form-control' type='text'/>
-                                        <small>Enter alias name</small>
+                                    <td width="20%">
+                                        <input placeholder='E.g : grand_total' name='responses_name[]' class='form-control form-control-sm' type='text'/>
+                                        <div class="form-text small">Enter alias name</div>
                                     </td>
                                     <td>
-                                        <select class='form-control' name='responses_type[]'>
+                                        <select class='form-select form-select-sm' name='responses_type[]'>
                                             <option value='integer'>Integer</option>
                                             <option value='boolean'>Boolean</option>
                                             <option value='string'>String</option>
@@ -778,16 +740,19 @@
                                             <option value='custom'>Custom (Not in Table)</option>
                                         </select>
                                     </td>
-                                    <td><input placeholder="E.g : select sum(total) from order_detail where id_order = order.id" name='responses_subquery[]'
-                                               class='form-control' type='text'>
-                                        <small>Enter sub query without alias name</small>
+                                    <td>
+                                        <input placeholder="E.g : select sum(total) from order_detail where id_order = order.id" name='responses_subquery[]' class='form-control form-control-sm' type='text'>
+                                        <div class="form-text small">Enter sub query without alias name</div>
                                     </td>
-                                    <td><select class='form-control responses_used' name='responses_used[]'>
+                                    <td>
+                                        <select class='form-select form-select-sm responses_used' name='responses_used[]'>
                                             <option value='1'>YES</option>
                                             <option value='0'>NO</option>
-                                        </select></td>
-                                    <td class='col-delete'><a class='btn btn-primary' href='javascript:void(0)' onclick='addResponse()'><i
-                                                    class='fa fa-plus'></i></a></td>
+                                        </select>
+                                    </td>
+                                    <td class='col-delete'>
+                                        <a class='btn btn-sm btn-primary' href='javascript:void(0)' onclick='addResponse()'><i class='bi bi-plus-lg'></i></a>
+                                    </td>
                                 </tr>
                                 </tfoot>
                             </table>
@@ -795,17 +760,17 @@
                     </div>
                 </div>
 
-                <div class='form-group'>
-                    <label>API Description</label>
+                <div class='mb-4'>
+                    <label class="form-label fw-bold">API Description</label>
                     <textarea name='keterangan' rows='3' class='form-control wysiwyg' placeholder='Optional'>{{@$row->keterangan}}</textarea>
                 </div>
 
-                <div class='form-group'>
-                    <input type='submit' class='btn btn-success' value='SAVE & GENERATE API'/>
+                <div class="d-flex justify-content-start">
+                    <input type="submit" class="btn btn-success" value="SAVE & GENERATE API"/>
                 </div>
 
-
+            </form>
         </div><!--END BODY-->
-    </div><!--END BOX-->
+    </div><!--END CARD-->
 
 @endsection

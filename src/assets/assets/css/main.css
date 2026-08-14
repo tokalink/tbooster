@@ -138,3 +138,30 @@
     color: var(--bs-secondary-color, #6c757d) !important;
     border-color: var(--bs-border-color, #495057) !important;
 }
+
+/* ==========================================================================
+   Summernote WYSIWYG Dark Mode Overrides
+   ========================================================================== */
+[data-bs-theme="dark"] .note-editor.note-frame {
+    border-color: var(--bs-border-color, #495057) !important;
+}
+
+[data-bs-theme="dark"] .note-editor .note-toolbar {
+    background-color: var(--bs-secondary-bg, #343a40) !important;
+    border-bottom-color: var(--bs-border-color, #495057) !important;
+}
+
+[data-bs-theme="dark"] .note-editor .note-toolbar .note-btn {
+    background-color: var(--bs-body-bg, #212529) !important;
+    color: var(--bs-body-color, #dee2e6) !important;
+    border-color: var(--bs-border-color, #495057) !important;
+}
+
+[data-bs-theme="dark"] .note-editor .note-editing-area .note-editable {
+    background-color: var(--bs-body-bg, #212529) !important;
+    color: var(--bs-body-color, #dee2e6) !important;
+}
+
+[data-bs-theme="dark"] .note-editor .note-statusbar {
+    background-color: var(--bs-secondary-bg, #343a40) !important;
+}
