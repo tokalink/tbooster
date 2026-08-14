@@ -1,4 +1,4 @@
-<aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+<aside class="app-sidebar shadow">
     <div class="sidebar-brand">
         <a href="{{url(config('crudbooster.ADMIN_PATH'))}}" class="brand-link">
             <img src="{{ CRUDBooster::getSetting('favicon')?asset(CRUDBooster::getSetting('favicon')):asset('vendor/crudbooster/assets/logo_crudbooster.png') }}" alt="Logo" class="brand-image opacity-75 shadow">

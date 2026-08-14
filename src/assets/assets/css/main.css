@@ -167,90 +167,186 @@
 }
 
 /* ==========================================================================
-   AdminLTE 4 Skin Color Themes
+   AdminLTE 4 Skin Color Themes & Brand Logo Styling
    ========================================================================== */
-/* Blue */
+
+/* 1. Skin Blue & Blue Light */
 body.skin-blue .app-header,
-body.skin-blue-light .app-header {
-    background: linear-gradient(135deg, #0d6efd, #0b5ed7) !important;
+body.skin-blue .sidebar-brand,
+body.skin-blue-light .app-header,
+body.skin-blue-light .sidebar-brand {
+    background: #0d6efd !important;
     color: #ffffff !important;
 }
 body.skin-blue .app-header .nav-link,
-body.skin-blue-light .app-header .nav-link {
+body.skin-blue .sidebar-brand a,
+body.skin-blue-light .app-header .nav-link,
+body.skin-blue-light .sidebar-brand a {
     color: #ffffff !important;
 }
 
-/* Green */
+/* 2. Skin Green & Green Light */
 body.skin-green .app-header,
-body.skin-green-light .app-header {
-    background: linear-gradient(135deg, #198754, #157347) !important;
+body.skin-green .sidebar-brand,
+body.skin-green-light .app-header,
+body.skin-green-light .sidebar-brand {
+    background: #198754 !important;
     color: #ffffff !important;
 }
 body.skin-green .app-header .nav-link,
-body.skin-green-light .app-header .nav-link {
+body.skin-green .sidebar-brand a,
+body.skin-green-light .app-header .nav-link,
+body.skin-green-light .sidebar-brand a {
     color: #ffffff !important;
 }
 
-/* Yellow */
+/* 3. Skin Yellow & Yellow Light */
 body.skin-yellow .app-header,
-body.skin-yellow-light .app-header {
-    background: linear-gradient(135deg, #ffc107, #ffcd39) !important;
+body.skin-yellow .sidebar-brand,
+body.skin-yellow-light .app-header,
+body.skin-yellow-light .sidebar-brand {
+    background: #ffc107 !important;
     color: #212529 !important;
 }
 body.skin-yellow .app-header .nav-link,
-body.skin-yellow-light .app-header .nav-link {
+body.skin-yellow .sidebar-brand a,
+body.skin-yellow-light .app-header .nav-link,
+body.skin-yellow-light .sidebar-brand a {
     color: #212529 !important;
 }
 
-/* Purple */
+/* 4. Skin Purple & Purple Light */
 body.skin-purple .app-header,
-body.skin-purple-light .app-header {
-    background: linear-gradient(135deg, #6f42c1, #59359a) !important;
+body.skin-purple .sidebar-brand,
+body.skin-purple-light .app-header,
+body.skin-purple-light .sidebar-brand {
+    background: #6f42c1 !important;
     color: #ffffff !important;
 }
 body.skin-purple .app-header .nav-link,
-body.skin-purple-light .app-header .nav-link {
+body.skin-purple .sidebar-brand a,
+body.skin-purple-light .app-header .nav-link,
+body.skin-purple-light .sidebar-brand a {
     color: #ffffff !important;
 }
 
-/* Red */
+/* 5. Skin Red & Red Light */
 body.skin-red .app-header,
-body.skin-red-light .app-header {
-    background: linear-gradient(135deg, #dc3545, #bb2d3b) !important;
+body.skin-red .sidebar-brand,
+body.skin-red-light .app-header,
+body.skin-red-light .sidebar-brand {
+    background: #dc3545 !important;
     color: #ffffff !important;
 }
 body.skin-red .app-header .nav-link,
-body.skin-red-light .app-header .nav-link {
+body.skin-red .sidebar-brand a,
+body.skin-red-light .app-header .nav-link,
+body.skin-red-light .sidebar-brand a {
     color: #ffffff !important;
 }
 
-/* Black */
+/* 6. Skin Black & Black Light */
 body.skin-black .app-header,
-body.skin-black-light .app-header {
-    background: linear-gradient(135deg, #212529, #1a1d20) !important;
+body.skin-black .sidebar-brand,
+body.skin-black-light .app-header,
+body.skin-black-light .sidebar-brand {
+    background: #212529 !important;
     color: #ffffff !important;
 }
 body.skin-black .app-header .nav-link,
-body.skin-black-light .app-header .nav-link {
+body.skin-black .sidebar-brand a,
+body.skin-black-light .app-header .nav-link,
+body.skin-black-light .sidebar-brand a {
     color: #ffffff !important;
 }
 
-/* Light Skin Variants Sidebar (Light Mode) */
-body.skin-blue-light:not([data-bs-theme="dark"]) .app-sidebar,
-body.skin-green-light:not([data-bs-theme="dark"]) .app-sidebar,
-body.skin-yellow-light:not([data-bs-theme="dark"]) .app-sidebar,
-body.skin-purple-light:not([data-bs-theme="dark"]) .app-sidebar,
-body.skin-red-light:not([data-bs-theme="dark"]) .app-sidebar,
-body.skin-black-light:not([data-bs-theme="dark"]) .app-sidebar {
-    background-color: #ffffff !important;
-    color: #212529 !important;
-    border-right: 1px solid #dee2e6;
+/* ==========================================================================
+   Sidebar Themes (Dark vs Light Variants)
+   ========================================================================== */
+/* Standard Dark Skins: Dark Sidebar */
+body.skin-blue .app-sidebar,
+body.skin-green .app-sidebar,
+body.skin-yellow .app-sidebar,
+body.skin-purple .app-sidebar,
+body.skin-red .app-sidebar,
+body.skin-black .app-sidebar {
+    background-color: #1e282c !important;
+    color: #b8c7ce !important;
 }
-body.skin-blue-light:not([data-bs-theme="dark"]) .app-sidebar .nav-link,
-body.skin-green-light:not([data-bs-theme="dark"]) .app-sidebar .nav-link,
-body.skin-yellow-light:not([data-bs-theme="dark"]) .app-sidebar .nav-link,
-body.skin-purple-light:not([data-bs-theme="dark"]) .app-sidebar .nav-link,
-body.skin-red-light:not([data-bs-theme="dark"]) .app-sidebar .nav-link,
-body.skin-black-light:not([data-bs-theme="dark"]) .app-sidebar .nav-link {
-    color: #495057 !important;
+body.skin-blue .app-sidebar .nav-link,
+body.skin-green .app-sidebar .nav-link,
+body.skin-yellow .app-sidebar .nav-link,
+body.skin-purple .app-sidebar .nav-link,
+body.skin-red .app-sidebar .nav-link,
+body.skin-black .app-sidebar .nav-link {
+    color: #b8c7ce !important;
+}
+body.skin-blue .app-sidebar .nav-link:hover,
+body.skin-green .app-sidebar .nav-link:hover,
+body.skin-yellow .app-sidebar .nav-link:hover,
+body.skin-purple .app-sidebar .nav-link:hover,
+body.skin-red .app-sidebar .nav-link:hover,
+body.skin-black .app-sidebar .nav-link:hover {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+body.skin-blue .app-sidebar .nav-link.active,
+body.skin-green .app-sidebar .nav-link.active,
+body.skin-yellow .app-sidebar .nav-link.active,
+body.skin-purple .app-sidebar .nav-link.active,
+body.skin-red .app-sidebar .nav-link.active,
+body.skin-black .app-sidebar .nav-link.active {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Light Skins Variants (-light): Light Sidebar & High Contrast Menu */
+body.skin-blue-light .app-sidebar,
+body.skin-green-light .app-sidebar,
+body.skin-yellow-light .app-sidebar,
+body.skin-purple-light .app-sidebar,
+body.skin-red-light .app-sidebar,
+body.skin-black-light .app-sidebar {
+    background-color: #f9fafc !important;
+    color: #333333 !important;
+    border-right: 1px solid #d2d6de !important;
+}
+body.skin-blue-light .app-sidebar .nav-link,
+body.skin-green-light .app-sidebar .nav-link,
+body.skin-yellow-light .app-sidebar .nav-link,
+body.skin-purple-light .app-sidebar .nav-link,
+body.skin-red-light .app-sidebar .nav-link,
+body.skin-black-light .app-sidebar .nav-link {
+    color: #444444 !important;
+}
+body.skin-blue-light .app-sidebar .nav-link:hover,
+body.skin-green-light .app-sidebar .nav-link:hover,
+body.skin-yellow-light .app-sidebar .nav-link:hover,
+body.skin-purple-light .app-sidebar .nav-link:hover,
+body.skin-red-light .app-sidebar .nav-link:hover,
+body.skin-black-light .app-sidebar .nav-link:hover {
+    color: #111111 !important;
+    background-color: #f4f4f5 !important;
+}
+body.skin-blue-light .app-sidebar .nav-link.active,
+body.skin-green-light .app-sidebar .nav-link.active,
+body.skin-yellow-light .app-sidebar .nav-link.active,
+body.skin-purple-light .app-sidebar .nav-link.active,
+body.skin-red-light .app-sidebar .nav-link.active,
+body.skin-black-light .app-sidebar .nav-link.active {
+    color: #ffffff !important;
+    background-color: #0d6efd !important;
+}
+body.skin-red-light .app-sidebar .nav-link.active { background-color: #dc3545 !important; }
+body.skin-green-light .app-sidebar .nav-link.active { background-color: #198754 !important; }
+body.skin-yellow-light .app-sidebar .nav-link.active { background-color: #ffc107 !important; color: #212529 !important; }
+body.skin-purple-light .app-sidebar .nav-link.active { background-color: #6f42c1 !important; }
+body.skin-black-light .app-sidebar .nav-link.active { background-color: #212529 !important; }
+
+.sidebar-brand {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
 }
