@@ -53,6 +53,11 @@
 /* ==========================================================================
    AdminLTE 4 & Dark Mode Overrides for Select, Select2, and Form Inputs
    ========================================================================== */
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+    box-shadow: none !important;
+}
+
 [data-bs-theme="dark"] .select2-container--default .select2-selection--single,
 [data-bs-theme="dark"] .select2-container--default .select2-selection--multiple,
 [data-bs-theme="dark"] .select2-container--default .select2-dropdown,
@@ -62,7 +67,12 @@
     border-color: var(--bs-border-color, #495057) !important;
 }
 
-[data-bs-theme="dark"] .select2-container--default .select2-selection--single .select2-selection__rendered,
+[data-bs-theme="dark"] .select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: var(--bs-body-color, #dee2e6) !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
 [data-bs-theme="dark"] .select2-container--default .select2-selection--multiple .select2-selection__choice {
     color: var(--bs-body-color, #dee2e6) !important;
     background-color: var(--bs-secondary-bg, #343a40) !important;
@@ -80,4 +90,5 @@
     background-color: var(--bs-body-bg, #212529) !important;
     color: var(--bs-body-color, #dee2e6) !important;
     border-color: var(--bs-border-color, #495057) !important;
+    box-shadow: none !important;
 }
