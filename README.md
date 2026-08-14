@@ -1,13 +1,13 @@
-# :rocket: TBooster - Laravel CRUD Generator (Laravel 11+ / PHP 8.2+ Ready)
+# 🚀 TBooster - Laravel CRUD Generator (AdminLTE 4 & Bootstrap 5 Version)
 
-TBooster adalah versi *fork* dan perbaikan dari [crocodicstudio/crudbooster](https://github.com/crocodicstudio/crudbooster) agar kompatibel penuh dengan versi modern Laravel (diuji sukses hingga **Laravel 13**) dan **PHP 8.2+**.
-Kami mempertahankan struktur dan kemudahan penggunaan dari CRUDBooster asli, dengan menambahkan pembaruan dependensi yang sangat modern.
+TBooster (branch `dev-adminlte4`) adalah versi modern dari [crocodicstudio/crudbooster](https://github.com/crocodicstudio/crudbooster) yang telah diperbarui total menggunakan tampilan **AdminLTE 4** dan **Bootstrap 5**, serta kompatibel penuh dengan **Laravel 11+** dan **PHP 8.2+**.
 
 ## Cara Instalasi dari GitHub
 
-Karena *package* ini belum tersedia di Packagist, Anda bisa menginstalnya secara langsung melalui repositori GitHub ini menggunakan Composer.
+Gunakan branch `dev-adminlte4` untuk mendapatkan tampilan AdminLTE 4 yang baru.
 
 ### Langkah 1: Tambahkan Repositori ke `composer.json`
+
 Buka file `composer.json` di *root* proyek Laravel Anda, lalu tambahkan konfigurasi repositori berikut:
 
 ```json
@@ -20,17 +20,19 @@ Buka file `composer.json` di *root* proyek Laravel Anda, lalu tambahkan konfigur
 ```
 
 ### Langkah 2: Lakukan _Require_ Package
-Jalankan perintah berikut di terminal Anda untuk mengunduh versi terbaru dari `main` branch:
+
+Jalankan perintah berikut di terminal Anda untuk mengunduh branch `dev-adminlte4`:
 
 ```bash
-composer require tokalink/tbooster:dev-main
+composer require tokalink/tbooster:dev-dev-adminlte4
 ```
 
 ### Langkah 3: Publish & Install
+
 Setelah *package* berhasil diinstal, jalankan perintah instalasi CRUDBooster seperti biasa:
 
 ```bash
 php artisan crudbooster:install
 ```
 
-Selesai! TBooster sudah siap digunakan di Laravel 11.
+Selesai! TBooster sudah siap digunakan di Laravel 11+.
